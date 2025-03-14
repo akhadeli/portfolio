@@ -1,6 +1,5 @@
 import { useRef, useMemo } from "react";
 import { useFrame, createPortal } from "@react-three/fiber";
-import { Mesh } from "three";
 import { useFBO } from "@react-three/drei";
 import * as THREE from "three";
 import { simVertex } from "./shaders/sim-vertex";
@@ -24,8 +23,8 @@ const FboTextureGenerator = (size: number) => {
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
       const index = (i * size + j) * 4;
-      let theta = Math.random() * Math.PI * 2;
-      let r = 0.5 + Math.random() * 0.5;
+      const theta = Math.random() * Math.PI * 2;
+      const r = 0.5 + Math.random() * 0.5;
       // Generate random RGB values for each texel
       data[index] = Math.cos(theta) * r;
       data[index + 1] = Math.sin(theta) * r;

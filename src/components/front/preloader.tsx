@@ -4,16 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { opacity, slideUp } from "./anim";
 
-const words = [
-  "Hello",
-  "Bonjour",
-  "Ciao",
-  "Olà",
-  "やあ",
-  "Hallå",
-  "Guten tag",
-  "Hallo",
-];
+const words = ["Hello", "My", "Name", "is", "Abdullah"];
 
 export default function Preloader() {
   const [index, setIndex] = useState(0);
@@ -31,7 +22,7 @@ export default function Preloader() {
       () => {
         setIndex(index + 1);
       },
-      index == 0 ? 1000 : 150
+      index == 0 ? 1000 : 400
     );
   }, [index]);
 
@@ -49,13 +40,13 @@ export default function Preloader() {
     initial: {
       d: initialPath,
 
-      transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] },
+      transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] },
     },
 
     exit: {
       d: targetPath,
 
-      transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.3 },
+      transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.3 },
     },
   };
   return (

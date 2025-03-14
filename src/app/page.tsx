@@ -1,22 +1,22 @@
 "use client";
 
-import Hero from "@/components/front/hero";
-import { ReactLenis, useLenis } from "lenis/react";
-import { useState, useEffect } from "react";
-import { AnimatePresence } from "motion/react";
-import Preloader from "@/components/front/preloader";
+// import Hero from "@/components/front/hero";
+import { ReactLenis } from "lenis/react";
+// import { useState, useEffect } from "react";
+// import { AnimatePresence } from "motion/react";
+// import Preloader from "@/components/front/preloader";
 import Scene from "@/components/front/3d/scene";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
-  const lenis = useLenis(({ scroll }) => {});
-  const [isLoading, setIsLoading] = useState(true);
+  // const lenis = useLenis(({ scroll }) => {});
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 3000);
+  // }, []);
 
   return (
     <ReactLenis root>
