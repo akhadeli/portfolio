@@ -138,7 +138,7 @@ export const simFragment = `
         
         pos.xy += (targetPos.xy - pos.xy) * 0.01;
 
-        pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.001;
+        pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.002;
 
         float distToMouse = length(pos.xy - mouse);
         vec2 dir = normalize(pos.xy - mouse);

@@ -11,27 +11,9 @@ import { fragment } from "./shaders/fragment";
 const FBOSetup = () => {
   const fboScene = new THREE.Scene();
   const fboCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
-  //   const fboGeometry = new THREE.PlaneGeometry(2, 2);
-
-  //   const fboTexture = FboTextureGenerator(128);
-
-  //   const fboMaterial = new THREE.ShaderMaterial({
-  //     fragmentShader: fragment,
-  //     vertexShader: vertexParticles,
-  //     uniforms: {
-  //       uPositions: { value: fboTexture },
-  //       uTime: { value: 0 },
-  //       resolution: { value: new THREE.Vector4() },
-  //       progress: { value: 0 },
-  //     },
-  //   });
-
-  //   const fboMesh = new THREE.Mesh(fboGeometry, fboMaterial);
-  //   fboScene.add(fboMesh);
   fboCamera.position.set(0, 0, 0.5);
   fboCamera.lookAt(0, 0, 0);
 
-  //   return { fboScene, fboCamera, fboTexture, fboMesh, fboMaterial };
   return { fboScene, fboCamera };
 };
 
@@ -110,7 +92,7 @@ export function Particles() {
   const points = useRef<THREE.Points>(null);
 
   // Create texture only once when component mounts
-  const size = 256;
+  const size = 128;
   const fboTexture = useMemo(() => {
     return FboTextureGenerator(size);
   }, []);
@@ -145,14 +127,14 @@ export function Particles() {
     [fboTexture]
   );
 
-  let fbo1 = useFBO(1024, 1024, {
+  let fbo1 = useFBO(512, 512, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
     format: THREE.RGBAFormat,
   });
 
-  let fbo2 = useFBO(1024, 1024, {
+  let fbo2 = useFBO(512, 512, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
@@ -171,7 +153,6 @@ export function Particles() {
       // For the first frame, use the original texture data
       // For subsequent frames, use the previous simulation result
       if (isFirstFrameRef.current) {
-        console.log(fboUniforms.uPositions.value);
         fboUniforms.uPositions.value = fboTexture;
         isFirstFrameRef.current = false;
       } else {

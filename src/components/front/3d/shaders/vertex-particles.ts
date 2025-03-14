@@ -13,7 +13,7 @@ export const vertexParticles = `
 
         float angle = atan(pos.y, pos.x);
 
-        vColor = 0.9 * vec4(0.5 + 0.45*sin(angle + uTime*0.5));
+        vColor = 0.7 * vec4(0.7 + 0.45*sin(angle + uTime*0.5));
 
         vec4 mvPosition = modelViewMatrix * vec4(pos.xyz, 1.0);
         gl_PointSize = 2.0 * (1.0 / -mvPosition.z);
