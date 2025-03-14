@@ -130,6 +130,7 @@ export function Particles() {
       uTime: { value: 0 },
       resolution: { value: new THREE.Vector4() },
       progress: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0, 0) },
     }),
     [fboTexture, infoTexture]
   );
@@ -164,7 +165,7 @@ export function Particles() {
   useFrame(({ gl, scene, camera, clock }) => {
     if (points.current) {
       // Update time values
-      fboUniforms.uTime.value = clock.getElapsedTime();
+      fboUniforms.uTime.value += 0.05;
       uniforms.uTime.value = clock.getElapsedTime();
 
       // For the first frame, use the original texture data
@@ -220,6 +221,17 @@ export function Particles() {
         </mesh>,
         fboScene
       )}
+      {/* Create dummy mesh to detect pointer events - positioned at Z=1 to match particles */}
+      <mesh
+        position={[0, 0, 1]}
+        onPointerMove={(e) => {
+          // Since the mesh is now at Z=1, e.point will directly match the particles' z-depth
+          fboUniforms.uMouse.value = new THREE.Vector2(e.point.x, e.point.y);
+        }}
+      >
+        <planeGeometry args={[4, 4]} />
+        <meshBasicMaterial transparent opacity={0} />
+      </mesh>
     </>
   );
 }

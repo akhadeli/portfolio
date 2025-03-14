@@ -24,15 +24,15 @@ export default function Home() {
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full">
           {/* <AnimatePresence>{isLoading && <Preloader />}</AnimatePresence> */}
           <>
-            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full overflow-hidden z-50">
-                <Image
-                  src="/images/profile.jpeg"
-                  alt="background"
-                  className="object-cover w-full h-full"
-                  width={300}
-                  height={300}
-                />
-              </div> */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full overflow-hidden z-50">
+              <Image
+                src="/images/profile.jpeg"
+                alt="background"
+                className="object-cover w-full h-full"
+                width={300}
+                height={300}
+              />
+            </div>
             <div className="w-full h-screen">
               <Scene />
             </div>

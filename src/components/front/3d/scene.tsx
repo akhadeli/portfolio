@@ -7,7 +7,7 @@ export default function Scene() {
     <Canvas>
       {/* <Model /> */}
       <Particles />
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 }
