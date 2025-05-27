@@ -7,9 +7,24 @@ export const simFragment = `
     varying vec2 vUv;
     varying vec3 vPosition;
     uniform vec2 uMouse;
+    uniform bool uMouseClicked;
     float PI = 3.141592653589793238;
 
     #define PI 3.1415926538
+
+    // Function to create rotation matrix around an arbitrary axis
+    mat3 rotationMatrix(vec3 axis, float angle) {
+        axis = normalize(axis);
+        float s = sin(angle);
+        float c = cos(angle);
+        float oc = 1.0 - c;
+        
+        return mat3(
+            oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,
+            oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,
+            oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c
+        );
+    }
 
     const float EPS = 0.001;
     vec4 mod289(vec4 x) {
@@ -124,13 +139,13 @@ export const simFragment = `
 
         vec2 mouse = uMouse;
 
-        float radius = length(pos.xy);
+        float radius = length(pos.xy) * 0.3;
 
         float circularForce = 1. - smoothstep(0.3, 1.4, pos.x - radius);
 
         float angle = atan(pos.y, pos.x) - info.y * 0.3 * mix(0.5, 1., circularForce);
 
-        float targetRadius = mix(info.x, 1.8, 0.5 + 0.45 * sin(angle*2. + uTime*0.6));
+        float targetRadius = mix(info.x, 1.0, 0.5 + 0.45 * sin(angle*2. + uTime*0.6));
 
         radius += (targetRadius - radius) * mix(0.2, 0.5, circularForce);
 
@@ -138,14 +153,26 @@ export const simFragment = `
         
         pos.xy += (targetPos.xy - pos.xy) * 0.01;
 
-        pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.002;
+        pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.0005;
 
         float distToMouse = length(pos.xy - mouse);
         vec2 dir = normalize(pos.xy - mouse);
 
-        pos.xy += dir * 0.01 * smoothstep(0.5, 0.0, distToMouse);
+        if (uMouseClicked) {
+            pos.xy -= dir * 0.05 * smoothstep(0.5, 0.0, distToMouse);
+        } else {
+            pos.xy += dir * 0.01 * smoothstep(0.5, 0.0, distToMouse);
+        }
+
+        // Apply 3D rotation as final step
+        // vec3 rotationAxis = normalize(info.rgb * 2.0 - 1.0);
+        // float rotationSpeed = info.z * 0.01;
+        // float rotationAngle = 2.0 * rotationSpeed;
+        // mat3 rotMat = rotationMatrix(rotationAxis, rotationAngle);
+        // pos.xyz = rotMat * pos.xyz;
         
         // Display the texture directly
+        // gl_FragColor = vec4(pos.xyz, 1.0);
         gl_FragColor = vec4(pos.xy, 1.0, 1.0);
     }
 `;

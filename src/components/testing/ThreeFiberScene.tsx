@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import { fragment, vertex } from "./front/3d/shader";
+import { fragment, vertex } from "./shader";
 
 // ShaderPlane component - equivalent to the plane mesh in the original code
 function ShaderPlane() {

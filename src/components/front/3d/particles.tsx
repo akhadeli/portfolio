@@ -6,6 +6,7 @@ import { simVertex } from "./shaders/sim-vertex";
 import { simFragment } from "./shaders/sim-frag";
 import { vertexParticles } from "./shaders/vertex-particles";
 import { fragment } from "./shaders/fragment";
+// import { vertex as vertexParticles, fragment } from "./shaders/droom-shaders";
 
 const FBOSetup = () => {
   const fboScene = new THREE.Scene();
@@ -32,6 +33,7 @@ const FboTextureGenerator = (size: number) => {
       data[index + 3] = 1.0;
     }
   }
+
   const texture = new THREE.DataTexture(
     data,
     size,
@@ -91,7 +93,7 @@ export function Particles() {
   const points = useRef<THREE.Points>(null);
 
   // Create texture only once when component mounts
-  const size = 128;
+  const size = 512;
   const fboTexture = useMemo(() => {
     return FboTextureGenerator(size);
   }, []);
@@ -112,6 +114,7 @@ export function Particles() {
       resolution: { value: new THREE.Vector4() },
       progress: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
+      uMouseClicked: { value: false },
     }),
     [fboTexture, infoTexture]
   );
@@ -207,6 +210,12 @@ export function Particles() {
         onPointerMove={(e) => {
           // Since the mesh is now at Z=1, e.point will directly match the particles' z-depth
           fboUniforms.uMouse.value = new THREE.Vector2(e.point.x, e.point.y);
+        }}
+        onPointerDown={() => {
+          fboUniforms.uMouseClicked.value = true;
+        }}
+        onPointerUp={() => {
+          fboUniforms.uMouseClicked.value = false;
         }}
       >
         <planeGeometry args={[4, 4]} />

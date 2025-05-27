@@ -2,27 +2,27 @@
 
 // import Hero from "@/components/front/hero";
 import { ReactLenis } from "lenis/react";
-// import { useState, useEffect } from "react";
-// import { AnimatePresence } from "motion/react";
-// import Preloader from "@/components/front/preloader";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "motion/react";
+import Preloader from "@/components/front/preloader";
 import Scene from "@/components/front/3d/scene";
 // import Image from "next/image";
 
 export default function Home() {
   // const lenis = useLenis(({ scroll }) => {});
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 3000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
 
   return (
     <ReactLenis root>
       <div className="flex flex-col items-center justify-center min-h-screen gap-16 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full">
-          {/* <AnimatePresence>{isLoading && <Preloader />}</AnimatePresence> */}
+          <AnimatePresence>{isLoading && <Preloader />}</AnimatePresence>
           <>
             {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full z-50">
               <div className="w-full h-full rounded-full overflow-hidden shadow-[0_0_16px_16px_white_inset]">
