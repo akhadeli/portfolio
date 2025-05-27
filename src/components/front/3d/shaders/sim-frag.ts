@@ -139,7 +139,7 @@ export const simFragment = `
 
         vec2 mouse = uMouse;
 
-        float radius = length(pos.xy) * 0.3;
+        float radius = length(pos.xy) * 1.0;
 
         float circularForce = 1. - smoothstep(0.3, 1.4, pos.x - radius);
 

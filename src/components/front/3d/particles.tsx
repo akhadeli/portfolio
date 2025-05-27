@@ -93,7 +93,7 @@ export function Particles() {
   const points = useRef<THREE.Points>(null);
 
   // Create texture only once when component mounts
-  const size = 512;
+  const size = 256;
   const fboTexture = useMemo(() => {
     return FboTextureGenerator(size);
   }, []);
@@ -129,14 +129,14 @@ export function Particles() {
     [fboTexture]
   );
 
-  let fbo1 = useFBO(512, 512, {
+  let fbo1 = useFBO(256, 256, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
     format: THREE.RGBAFormat,
   });
 
-  let fbo2 = useFBO(512, 512, {
+  let fbo2 = useFBO(256, 256, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,

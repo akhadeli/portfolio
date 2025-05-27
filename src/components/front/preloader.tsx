@@ -2,82 +2,93 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { opacity, slideUp } from "./anim";
-
-const words = ["Hello", "My", "Name", "is", "Abdullah"];
 
 export default function Preloader() {
-  const [index, setIndex] = useState(0);
-
-  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+  const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    setDimension({ width: window.innerWidth, height: window.innerHeight });
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          setIsComplete(true);
+          clearInterval(timer);
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, 50);
+
+    return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (index == words.length - 1) return;
-
-    setTimeout(
-      () => {
-        setIndex(index + 1);
-      },
-      index == 0 ? 1000 : 400
-    );
-  }, [index]);
-
-  const initialPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${
-    dimension.height
-  } Q${dimension.width / 2} ${dimension.height + 300} 0 ${
-    dimension.height
-  }  L0 0`;
-
-  const targetPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${
-    dimension.height
-  } Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height}  L0 0`;
-
-  const curve = {
-    initial: {
-      d: initialPath,
-
-      transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] },
-    },
-
-    exit: {
-      d: targetPath,
-
-      transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.3 },
-    },
-  };
   return (
     <motion.div
-      variants={slideUp}
-      initial="initial"
-      exit="exit"
-      className="h-screen w-screen flex items-center justify-center fixed z-[99] bg-[#141516]"
+      initial={{ opacity: 1 }}
+      exit={{
+        opacity: 0,
+        scale: 1.1,
+        transition: {
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1],
+          delay: 0.2,
+        },
+      }}
+      className="fixed inset-0 z-[99] bg-background flex items-center justify-center"
     >
-      {dimension.width > 0 && (
-        <>
-          <motion.p
-            variants={opacity}
-            initial="initial"
-            animate="enter"
-            className="flex text-white text-[42px] items-center absolute z-[1]"
-          >
-            <span className="block w-[10px] h-[10px] bg-white rounded-full mr-[10px]"></span>
-            {words[index]}
-          </motion.p>
+      <div className="flex flex-col items-center space-y-8">
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="w-64 md:w-80"
+        >
+          <div className="relative">
+            <div className="h-px bg-border rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-foreground rounded-full"
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+              />
+            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-4 text-center text-sm text-muted-foreground font-light tracking-widest"
+            >
+              {progress}%
+            </motion.div>
+          </div>
+        </motion.div>
 
-          <svg className="absolute top-0 w-full h-[calc(100%+300px)]">
-            <motion.path
-              variants={curve}
-              initial="initial"
-              exit="exit"
-              className="fill-[#141516]"
-            ></motion.path>
-          </svg>
-        </>
-      )}
+        {/* Loading Animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="flex space-x-3"
+        >
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="w-1.5 h-1.5 bg-muted-foreground rounded-full"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.4, 1, 0.4],
+              }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                delay: i * 0.3,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
