@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
@@ -31,7 +31,7 @@ export default function Preloader() {
         transition: {
           duration: 0.8,
           ease: [0.76, 0, 0.24, 1],
-          delay: 0.2,
+          delay: isComplete ? 0.2 : 0,
         },
       }}
       className="fixed inset-0 z-[99] bg-background flex items-center justify-center"

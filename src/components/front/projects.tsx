@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -9,12 +9,10 @@ import {
   ExternalLink,
   Github,
   Star,
-  Users,
   Zap,
   Eye,
   Code,
   Smartphone,
-  Brain,
   Database,
   Clock,
 } from "lucide-react";
@@ -620,8 +618,8 @@ export default function Projects() {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               From enterprise AI platforms to cutting-edge computer vision
               research, I specialize in building scalable, high-performance
-              solutions that drive real business impact. Let's discuss how we
-              can bring your vision to life.
+              solutions that drive real business impact. Let&apos;s discuss how
+              we can bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a

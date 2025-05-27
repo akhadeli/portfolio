@@ -4,7 +4,7 @@ import { useFBO } from "@react-three/drei";
 import * as THREE from "three";
 import { vertexParticles, simFragment } from "./droom-shaders";
 import { simVertex } from "../front/3d/shaders/sim-vertex";
-import { fragment } from "./shader";
+// import { fragment } from "./shader";
 
 export const DroomParticles = () => {
   const points = useRef<THREE.Points>(null);

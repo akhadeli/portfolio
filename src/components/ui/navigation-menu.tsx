@@ -27,6 +27,7 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
 ));
+NavigationMenu.displayName = "NavigationMenu";
 
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
@@ -41,8 +42,10 @@ const NavigationMenuList = React.forwardRef<
     {...props}
   />
 ));
+NavigationMenuList.displayName = "NavigationMenuList";
 
 const NavigationMenuItem = NavigationMenuPrimitive.Item;
+NavigationMenuItem.displayName = "NavigationMenuItem";
 
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
@@ -60,6 +63,7 @@ const NavigationMenuTrigger = React.forwardRef<
     />
   </NavigationMenuPrimitive.Trigger>
 ));
+NavigationMenuTrigger.displayName = "NavigationMenuTrigger";
 
 const NavigationMenuContent = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Content>,
@@ -74,8 +78,10 @@ const NavigationMenuContent = React.forwardRef<
     {...props}
   />
 ));
+NavigationMenuContent.displayName = "NavigationMenuContent";
 
 const NavigationMenuLink = NavigationMenuPrimitive.Link;
+NavigationMenuLink.displayName = "NavigationMenuLink";
 
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
@@ -84,7 +90,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-lg border border-border bg-card/95 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
         className
       )}
       ref={ref}
@@ -92,6 +98,7 @@ const NavigationMenuViewport = React.forwardRef<
     />
   </div>
 ));
+NavigationMenuViewport.displayName = "NavigationMenuViewport";
 
 const NavigationMenuIndicator = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
@@ -108,6 +115,7 @@ const NavigationMenuIndicator = React.forwardRef<
     <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
   </NavigationMenuPrimitive.Indicator>
 ));
+NavigationMenuIndicator.displayName = "NavigationMenuIndicator";
 
 export {
   navigationMenuTriggerStyle,

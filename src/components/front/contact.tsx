@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -12,10 +12,8 @@ import {
   Linkedin,
   Github,
   ExternalLink,
-  Send,
   Calendar,
   Clock,
-  CheckCircle,
   MessageSquare,
 } from "lucide-react";
 
@@ -139,20 +137,20 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
             >
               <h3 className="text-3xl font-light text-foreground mb-6">
-                Let's Build Something{" "}
+                Let&apos;s Build Something{" "}
                 <span className="text-primary animate-pulse">Amazing</span>
               </h3>
               <p className="text-muted-foreground leading-relaxed text-lg mb-6">
-                Ready to bring your next big idea to life? Whether you're
+                Ready to bring your next big idea to life? Whether you&apos;re
                 looking for a technical leader, AI engineer, or founding team
-                member, I'd love to hear about your vision and explore how we
-                can work together.
+                member, I&apos;d love to hear about your vision and explore how
+                we can work together.
               </p>
               <p className="text-muted-foreground/70 leading-relaxed">
-                I'm particularly interested in projects involving AI/ML,
+                I&apos;m particularly interested in projects involving AI/ML,
                 performance optimization, team leadership, and innovative user
-                experiences. Let's discuss how my expertise can help drive your
-                project forward.
+                experiences. Let&apos;s discuss how my expertise can help drive
+                your project forward.
               </p>
             </motion.div>
           </div>

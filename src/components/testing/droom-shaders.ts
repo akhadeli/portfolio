@@ -967,4 +967,13 @@ void main () {
 
 `;
 
-export { vertexParticles, simFragment, vertex, vertex2, fragment2 };
+export {
+  vertexParticles,
+  simFragment,
+  vertex,
+  vertex2,
+  fragment2,
+  introFragment,
+  introVertex,
+  fragment,
+};

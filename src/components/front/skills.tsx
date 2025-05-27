@@ -1,16 +1,14 @@
 "use client";
 
-import { type ForwardRefExoticComponent, useRef } from "react";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {
-  Icon,
   Code,
   Cloud,
   Database,
-  Cpu,
   Layers,
   Zap,
   Brain,
@@ -21,7 +19,6 @@ import {
   FileText,
   Workflow,
   CheckCircle,
-  Globe,
 } from "lucide-react";
 import {
   siTypescript,

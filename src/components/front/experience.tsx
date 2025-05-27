@@ -1,19 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import {
-  Building2,
-  Calendar,
-  MapPin,
-  TrendingUp,
-  Users,
-  Award,
-  Zap,
-} from "lucide-react";
+import { Calendar, MapPin, TrendingUp, Users, Award, Zap } from "lucide-react";
 
 const experiences = [
   {
