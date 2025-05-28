@@ -5,14 +5,11 @@ import { motion } from "framer-motion";
 
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
-  // @ts-ignore
-  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          setIsComplete(true);
           clearInterval(timer);
           return 100;
         }

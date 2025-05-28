@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, useState, useLayoutEffect } from "react";
+import { useRef, useMemo, useState, useLayoutEffect } from "react";
 import { useFrame, createPortal } from "@react-three/fiber";
 import { useFBO } from "@react-three/drei";
 import * as THREE from "three";
@@ -143,7 +143,7 @@ export function Particles() {
       resolution: { value: new THREE.Vector4() },
       progress: { value: 0 },
     }),
-    [fboTexture]
+    []
   );
 
   let fbo1 = useFBO(gpuSettings.size, gpuSettings.size, {
