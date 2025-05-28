@@ -2,7 +2,7 @@
 
 import { ReactLenis } from "lenis/react";
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence } from "framer-motion";
 import Preloader from "@/components/front/preloader";
 import Scene from "@/components/front/3d/scene";
 import Hero from "@/components/front/hero";

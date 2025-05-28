@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState, useLayoutEffect } from "react";
 import { useFrame, createPortal } from "@react-three/fiber";
 import { useFBO } from "@react-three/drei";
 import * as THREE from "three";
@@ -6,6 +6,7 @@ import { simVertex } from "./shaders/sim-vertex";
 import { simFragment } from "./shaders/sim-frag";
 import { vertexParticles } from "./shaders/vertex-particles";
 import { fragment } from "./shaders/fragment";
+import { getGPUSettings, ParticleSettings } from "./utils/gpu-tier";
 // import { vertex as vertexParticles, fragment } from "./shaders/droom-shaders";
 
 const FBOSetup = () => {
@@ -91,18 +92,34 @@ const UvGenerator = (size: number) => {
 
 export function Particles() {
   const points = useRef<THREE.Points>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [gpuSettings, setGpuSettings] = useState<ParticleSettings>({
+    size: 256,
+  });
+
+  // Initialize GPU settings
+  useLayoutEffect(() => {
+    const initGPU = async () => {
+      const settings = await getGPUSettings();
+      setGpuSettings(settings);
+      setLoaded(true);
+    };
+    initGPU();
+  }, []);
 
   // Create texture only once when component mounts
-  const size = 256;
   const fboTexture = useMemo(() => {
-    return FboTextureGenerator(size);
-  }, []);
+    return FboTextureGenerator(gpuSettings.size);
+  }, [gpuSettings.size]);
 
   const infoTexture = useMemo(() => {
-    return InfoTextureGenerator(size);
-  }, []);
+    return InfoTextureGenerator(gpuSettings.size);
+  }, [gpuSettings.size]);
 
-  const { positions, uv } = useMemo(() => UvGenerator(size), []);
+  const { positions, uv } = useMemo(
+    () => UvGenerator(gpuSettings.size),
+    [gpuSettings.size]
+  );
 
   const { fboScene, fboCamera } = useMemo(() => FBOSetup(), []);
 
@@ -129,14 +146,14 @@ export function Particles() {
     [fboTexture]
   );
 
-  let fbo1 = useFBO(256, 256, {
+  let fbo1 = useFBO(gpuSettings.size, gpuSettings.size, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
     format: THREE.RGBAFormat,
   });
 
-  let fbo2 = useFBO(256, 256, {
+  let fbo2 = useFBO(gpuSettings.size, gpuSettings.size, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
@@ -177,6 +194,8 @@ export function Particles() {
       fbo2 = temp;
     }
   });
+
+  if (!loaded) return null;
 
   return (
     <>

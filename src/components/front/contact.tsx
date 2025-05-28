@@ -229,24 +229,24 @@ export default function Contact() {
             <MessageSquare className="w-5 h-5 text-primary" />
             Get In Touch
           </h4>
-          <div className="grid gap-4 w-full grid-cols-3">
+          <div className="grid gap-4 w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {contactInfo.map((info, index) => {
               const IconComponent = info.icon;
               return (
                 <motion.div
                   key={info.label}
-                  className="bg-card/30 rounded-xl p-6 border border-border hover:border-primary/20 transition-all duration-300 group"
+                  className="bg-card/30 rounded-xl p-4 sm:p-6 border border-border hover:border-primary/20 transition-all duration-300 group"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors duration-300">
-                      <IconComponent className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors duration-300">
+                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                     </div>
-                    <div className="flex-1">
-                      <div className="text-sm text-muted-foreground/70 uppercase tracking-wide mb-1">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs sm:text-sm text-muted-foreground/70 uppercase tracking-wide mb-1">
                         {info.label}
                       </div>
                       <motion.a
@@ -254,13 +254,13 @@ export default function Contact() {
                         target={
                           info.link.startsWith("http") ? "_blank" : "_self"
                         }
-                        className="text-foreground hover:text-primary transition-colors font-medium block mb-2"
+                        className="text-sm sm:text-base text-foreground hover:text-primary transition-colors font-medium block mb-2 truncate"
                         whileHover={{ x: 5 }}
                         transition={{ duration: 0.2 }}
                       >
                         {info.value}
                       </motion.a>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-[10px] sm:text-xs text-muted-foreground">
                         {info.description}
                       </div>
                     </div>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
+  // @ts-ignore
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
@@ -25,13 +26,14 @@ export default function Preloader() {
   return (
     <motion.div
       initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       exit={{
         opacity: 0,
         scale: 1.1,
         transition: {
           duration: 0.8,
           ease: [0.76, 0, 0.24, 1],
-          delay: isComplete ? 0.2 : 0,
+          delay: 0.2,
         },
       }}
       className="fixed inset-0 z-[99] bg-background flex items-center justify-center"
