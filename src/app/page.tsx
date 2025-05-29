@@ -30,12 +30,8 @@ export default function Home() {
         {/* Hero Section with 3D Background */}
         <div className="relative min-h-screen">
           {/* 3D Particle Background - Only for Hero */}
-          <div className="absolute inset-0 z-0">
+          <div className="relative inset-0 z-0 h-screen">
             <Scene />
-          </div>
-
-          {/* Hero Content */}
-          <div className="relative z-10">
             <Hero />
           </div>
         </div>

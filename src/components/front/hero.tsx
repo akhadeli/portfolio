@@ -33,22 +33,22 @@ export default function Hero() {
   };
 
   return (
-    <div className="relative h-screen w-full flex overflow-hidden justify-center items-center">
+    <>
       {/* Hero Content - Centered within the particle ring */}
       <motion.div
         ref={heroRef}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-        className="relative z-20 text-center"
+        className="absolute inset-0 flex flex-col overflow-hidden justify-center items-center z-20 text-center pointer-events-none"
       >
         {/* Main Brand Text */}
-        <div className="mb-8">
+        <div className="mb-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="mb-2"
+            className="mb-4"
           >
             <h1 className="text-lg md:text-xl font-light tracking-[0.3em] text-muted-foreground uppercase">
               Abdullah Khadeli
@@ -59,7 +59,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="mb-6"
+            className="mb-4"
           >
             <h2 className="text-xs md:text-sm font-light tracking-[0.2em] text-muted-foreground/70 uppercase">
               Founder • Full-Stack Developer
@@ -76,7 +76,7 @@ export default function Hero() {
           <Button
             onClick={handleEnterClick}
             variant="outline"
-            className="group relative border border-border bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary/20 transition-all duration-500 px-8 py-3 text-sm tracking-[0.2em] uppercase font-light"
+            className="group relative border border-border bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary/20 transition-all duration-500 px-8 py-3 text-sm tracking-[0.2em] uppercase font-light pointer-events-auto"
           >
             <span className="relative z-10">Explore</span>
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -100,6 +100,6 @@ export default function Hero() {
           <ChevronDown className="h-4 w-4" />
         </motion.div>
       </motion.div>
-    </div>
+    </>
   );
 }

@@ -69,7 +69,7 @@ export default function About() {
             className="w-16 h-px bg-border mx-auto"
             initial={{ width: 0 }}
             whileInView={{ width: 64 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
           />
         </div>
 
@@ -123,7 +123,7 @@ export default function About() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="bg-card/30 rounded-xl p-6 border border-border hover:border-primary/20 transition-all duration-300"
             >
               <h4 className="text-foreground font-medium mb-4">Quick Facts</h4>
@@ -139,7 +139,7 @@ export default function About() {
                   <span className="text-foreground">3+ Years</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Graduation</span>
+                  <span className="text-muted-foreground">Graduated</span>
                   <span className="text-foreground">June 2025</span>
                 </div>
               </div>
@@ -154,8 +154,7 @@ export default function About() {
               transition={{ duration: 0.8 }}
             >
               <h3 className="text-3xl md:text-4xl font-light text-foreground mb-6 leading-relaxed">
-                AI Engineer &{" "}
-                <span className="text-muted-foreground">Team Lead</span>
+                Full-Stack Developer & Team Lead
               </h3>
 
               <div className="space-y-6 text-muted-foreground leading-relaxed">
@@ -177,7 +176,7 @@ export default function About() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
               className="bg-card/30 rounded-xl p-6 border border-border hover:border-primary/20 transition-all duration-300"
             >
               <h4 className="text-foreground font-medium mb-4 flex items-center gap-2">
@@ -188,21 +187,19 @@ export default function About() {
                 <li className="flex items-start gap-3 text-muted-foreground">
                   <TrendingUp className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                   <span>
-                    Led engineering teams to deliver 4x performance improvements
+                    Led engineering teams to deliver products to market
                   </span>
                 </li>
                 <li className="flex items-start gap-3 text-muted-foreground">
                   <Users className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                   <span>
-                    Showcased AI platform to 25,000+ attendees at Web Summit
-                    Doha
+                    Showcased products to 25,000+ attendees at Web Summit Doha
                   </span>
                 </li>
                 <li className="flex items-start gap-3 text-muted-foreground">
                   <Zap className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
                   <span>
-                    Built platforms serving 1,000+ users with custom AI
-                    orchestration
+                    Built platforms serving users with custom AI orchestration
                   </span>
                 </li>
               </ul>
@@ -214,7 +211,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.25 }}
           className="grid md:grid-cols-3 gap-8 mb-20"
         >
           <div className="bg-card/30 rounded-xl p-8 border border-border hover:border-primary/20 transition-all duration-300 text-center group">
@@ -256,7 +253,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
           className="text-center bg-card/20 rounded-xl p-8 border border-border hover:border-primary/20 transition-all duration-300"
         >
           <div className="space-y-4">
@@ -268,7 +265,7 @@ export default function About() {
                 B.S. Computing Science with Specialization
               </div>
               <div className="text-sm text-muted-foreground">
-                Graduating June 2025
+                Graduated June 2025
               </div>
             </div>
 

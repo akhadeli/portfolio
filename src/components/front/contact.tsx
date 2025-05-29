@@ -210,7 +210,7 @@ export default function Contact() {
           <div className="space-y-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-primary" />
-              <span>Graduating June 2025</span>
+              <span>Graduated June 2025</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-primary" />
@@ -218,7 +218,7 @@ export default function Contact() {
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" />
-              <span>Remote or Edmonton-based</span>
+              <span>Remote or open to relocation</span>
             </div>
           </div>
         </motion.div>
