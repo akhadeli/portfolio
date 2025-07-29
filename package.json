@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && touch out/.nojekyll && echo 'akhadeli.com' > out/CNAME && git add out/ && git commit -m \"Deploy\" && git subtree split --prefix out -b temp-gh-pages && git push origin temp-gh-pages:gh-pages && git branch -D temp-gh-pages"
+    "deploy": "next build && touch out/.nojekyll && echo 'akhadeli.com' > out/CNAME && git add out/ && git commit -m \"Deploy\" && git subtree split --prefix out -b temp-gh-pages && git push origin temp-gh-pages:gh-pages --force && git branch -D temp-gh-pages"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
