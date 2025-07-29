@@ -10,7 +10,7 @@ import {
   Cloud,
   Database,
   Layers,
-  Zap,
+  // Zap,
   Brain,
   Network,
   Eye,
@@ -279,7 +279,7 @@ export default function Skills() {
         {/* Skills Grid */}
         <div ref={skillsRef} className="space-y-16">
           {skillCategories.map((category, categoryIndex) => {
-            const IconComponent = category.icon;
+            // const IconComponent = category.icon;
 
             return (
               <motion.div
