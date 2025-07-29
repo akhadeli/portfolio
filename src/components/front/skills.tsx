@@ -290,9 +290,9 @@ export default function Skills() {
                 transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
               >
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center">
+                  {/* <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center">
                     <IconComponent className="w-6 h-6 text-primary" />
-                  </div>
+                  </div> */}
                   <div>
                     <h3 className="text-xl font-light text-foreground">
                       {category.title}
@@ -385,9 +385,9 @@ export default function Skills() {
           {/* Main Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 max-w-6xl mx-auto mb-16">
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Code className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 8+
               </div>
@@ -397,9 +397,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Layers className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 25+
               </div>
@@ -409,9 +409,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Brain className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 10+
               </div>
@@ -421,9 +421,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Cloud className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 3
               </div>
@@ -433,9 +433,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Eye className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 6
               </div>
@@ -445,9 +445,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Database className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 8
               </div>
@@ -457,9 +457,9 @@ export default function Skills() {
             </div>
 
             <div className="text-center group">
-              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
+              {/* <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/10 transition-colors duration-300">
                 <Zap className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              </div>
+              </div> */}
               <div className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 5+
               </div>

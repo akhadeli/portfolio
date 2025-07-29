@@ -159,10 +159,10 @@ export default function About() {
 
               <div className="space-y-6 text-muted-foreground leading-relaxed">
                 <p className="text-lg">
-                  Currently pursuing a B.S. in Computing Science with
-                  Specialization at the University of Alberta, graduating June
-                  2025. I focus on building scalable systems and leading teams
-                  to deliver high-performance solutions.
+                  Graduated with a B.S. in Computing Science with Specialization
+                  from the University of Alberta in June 2025. I focus on
+                  building scalable systems and leading teams to deliver
+                  high-performance solutions.
                 </p>
 
                 <p className="text-lg">
