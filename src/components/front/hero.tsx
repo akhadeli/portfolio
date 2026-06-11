@@ -30,7 +30,7 @@ export default function Hero() {
 
     const handleEnterClick = () => {
         document
-            .getElementById("projects")
+            .getElementById("about")
             ?.scrollIntoView({ behavior: "smooth" });
     };
 
@@ -80,32 +80,9 @@ export default function Hero() {
                         variant="outline"
                         className="group relative border border-border bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary/20 transition-all duration-500 px-8 py-3 text-sm tracking-[0.2em] uppercase font-light pointer-events-auto"
                     >
-                        <span className="relative z-10">View Work</span>
+                        <span className="relative z-10">See more</span>
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
-                </motion.div>
-            </motion.div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2 }}
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            >
-                <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                    className="flex flex-col items-center text-muted-foreground hover:text-primary transition-colors duration-300"
-                >
-                    <span className="text-xs tracking-wide mb-2 uppercase">
-                        Scroll
-                    </span>
-                    <ChevronDown className="h-4 w-4" />
                 </motion.div>
             </motion.div>
         </>
