@@ -12,7 +12,7 @@ const experiences = [
         role: "Product Engineer",
         period: "Apr 2026 - Present",
         duration: "2+ months",
-        location: "Remote",
+        location: "Doha, Qatar",
         type: "Full-time",
         description:
             "Building product features for Starise, a platform that helps businesses turn happy customers into authentic reviews.",
@@ -86,7 +86,7 @@ const experiences = [
         role: "Founding Engineer",
         period: "Jun 2024 - Present",
         duration: "11+ months",
-        location: "Remote",
+        location: "Edmonton, AB",
         type: "Full-time",
         description:
             "Building an EdTech product from zero to production with custom AI orchestration and cloud-native deployment.",
@@ -213,95 +213,93 @@ export default function Experience() {
             },
         );
 
-        gsap.utils
-            .toArray<HTMLElement>(".experience-item")
-            .forEach((item) => {
-                // Timeline dot pops in
-                gsap.fromTo(
-                    item.querySelector(".timeline-dot"),
-                    { scale: 0 },
-                    {
-                        scale: 1,
-                        duration: 0.6,
-                        ease: "back.out(2.5)",
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 75%",
-                            toggleActions: "play none none reverse",
-                        },
+        gsap.utils.toArray<HTMLElement>(".experience-item").forEach((item) => {
+            // Timeline dot pops in
+            gsap.fromTo(
+                item.querySelector(".timeline-dot"),
+                { scale: 0 },
+                {
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "back.out(2.5)",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse",
                     },
-                );
+                },
+            );
 
-                // Columns slide in from opposite sides
-                gsap.fromTo(
-                    item.querySelector(".exp-content"),
-                    { opacity: 0, x: -80 },
-                    {
-                        opacity: 1,
-                        x: 0,
-                        duration: 1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 75%",
-                            toggleActions: "play none none reverse",
-                        },
+            // Columns slide in from opposite sides
+            gsap.fromTo(
+                item.querySelector(".exp-content"),
+                { opacity: 0, x: -80 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse",
                     },
-                );
-                gsap.fromTo(
-                    item.querySelector(".exp-achievements"),
-                    { opacity: 0, x: 80 },
-                    {
-                        opacity: 1,
-                        x: 0,
-                        duration: 1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 75%",
-                            toggleActions: "play none none reverse",
-                        },
+                },
+            );
+            gsap.fromTo(
+                item.querySelector(".exp-achievements"),
+                { opacity: 0, x: 80 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse",
                     },
-                );
+                },
+            );
 
-                // Achievement rows stagger in
-                gsap.fromTo(
-                    item.querySelectorAll(".achievement-row"),
-                    { opacity: 0, y: 16 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        ease: "power3.out",
-                        stagger: 0.12,
-                        delay: 0.3,
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 75%",
-                            toggleActions: "play none none reverse",
-                        },
+            // Achievement rows stagger in
+            gsap.fromTo(
+                item.querySelectorAll(".achievement-row"),
+                { opacity: 0, y: 16 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power3.out",
+                    stagger: 0.12,
+                    delay: 0.3,
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse",
                     },
-                );
+                },
+            );
 
-                // Tech pills stagger in
-                gsap.fromTo(
-                    item.querySelectorAll(".tech-pill"),
-                    { opacity: 0, y: 8 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.4,
-                        ease: "power2.out",
-                        stagger: 0.05,
-                        delay: 0.4,
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 75%",
-                            toggleActions: "play none none reverse",
-                        },
+            // Tech pills stagger in
+            gsap.fromTo(
+                item.querySelectorAll(".tech-pill"),
+                { opacity: 0, y: 8 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    stagger: 0.05,
+                    delay: 0.4,
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse",
                     },
-                );
-            });
+                },
+            );
+        });
     }, []);
 
     return (
