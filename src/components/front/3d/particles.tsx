@@ -92,6 +92,11 @@ const UvGenerator = (size: number) => {
 
 export function Particles() {
   const points = useRef<THREE.Points>(null);
+  // Since fiber 9.6, the `uniforms` prop is copied into the material rather
+  // than shared by reference, so per-frame mutations must go through the
+  // material's own uniforms via these refs
+  const simMaterial = useRef<THREE.ShaderMaterial>(null);
+  const renderMaterial = useRef<THREE.ShaderMaterial>(null);
   const [loaded, setLoaded] = useState(false);
   const [gpuSettings, setGpuSettings] = useState<ParticleSettings>({
     size: 256,
@@ -164,25 +169,31 @@ export function Particles() {
   const isFirstFrameRef = useRef(true);
 
   useFrame(({ gl, scene, camera, clock }) => {
-    if (points.current) {
+    if (points.current && simMaterial.current && renderMaterial.current) {
+      const simUniforms = simMaterial.current.uniforms;
+      const renderUniforms = renderMaterial.current.uniforms;
+
       // Update time values
-      fboUniforms.uTime.value += 0.05;
-      uniforms.uTime.value = clock.getElapsedTime();
+      simUniforms.uTime.value += 0.05;
+      renderUniforms.uTime.value = clock.getElapsedTime();
 
       // For the first frame, use the original texture data
       // For subsequent frames, use the previous simulation result
       if (isFirstFrameRef.current) {
-        fboUniforms.uPositions.value = fboTexture;
+        simUniforms.uPositions.value = fboTexture;
         isFirstFrameRef.current = false;
       } else {
-        fboUniforms.uPositions.value = fbo2.texture as THREE.DataTexture;
+        simUniforms.uPositions.value = fbo2.texture;
       }
       // Use the simulation result (fbo1) for particles
-      uniforms.uPositions.value = fbo1.texture as THREE.Texture;
+      renderUniforms.uPositions.value = fbo1.texture;
 
       // Render simulation to fbo1
       gl.setRenderTarget(fbo1);
-      gl.render(fboScene, fboCamera);
+      gl.render(
+        fboScene as unknown as typeof scene,
+        fboCamera as unknown as typeof camera
+      );
       gl.setRenderTarget(null);
 
       // Render the scene
@@ -205,6 +216,7 @@ export function Particles() {
           <bufferAttribute attach="attributes-uv" args={[uv, 2]} />
         </bufferGeometry>
         <shaderMaterial
+          ref={renderMaterial}
           side={THREE.DoubleSide}
           fragmentShader={fragment}
           vertexShader={vertexParticles}
@@ -216,25 +228,28 @@ export function Particles() {
         <mesh>
           <planeGeometry args={[2, 2]} />
           <shaderMaterial
+            ref={simMaterial}
             fragmentShader={simFragment}
             vertexShader={simVertex}
             uniforms={fboUniforms}
           />
         </mesh>,
-        fboScene
+        fboScene as unknown as Parameters<typeof createPortal>[1]
       )}
       {/* Create dummy mesh to detect pointer events - positioned at Z=1 to match particles */}
       <mesh
         position={[0, 0, 1]}
         onPointerMove={(e) => {
           // Since the mesh is now at Z=1, e.point will directly match the particles' z-depth
-          fboUniforms.uMouse.value = new THREE.Vector2(e.point.x, e.point.y);
+          simMaterial.current?.uniforms.uMouse.value.set(e.point.x, e.point.y);
         }}
         onPointerDown={() => {
-          fboUniforms.uMouseClicked.value = true;
+          if (simMaterial.current)
+            simMaterial.current.uniforms.uMouseClicked.value = true;
         }}
         onPointerUp={() => {
-          fboUniforms.uMouseClicked.value = false;
+          if (simMaterial.current)
+            simMaterial.current.uniforms.uMouseClicked.value = false;
         }}
       >
         <planeGeometry args={[4, 4]} />
