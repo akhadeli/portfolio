@@ -1,288 +1,171 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Linkedin,
-  Github,
-  ExternalLink,
-  Calendar,
-  Clock,
-  MessageSquare,
-} from "lucide-react";
+import { MapPin, Linkedin, Github, ExternalLink } from "lucide-react";
+
+const socialLinks = [
+    {
+        label: "LinkedIn",
+        url: "https://linkedin.com/in/akhadeli",
+        icon: Linkedin,
+    },
+    {
+        label: "GitHub",
+        url: "https://github.com/akhadeli",
+        icon: Github,
+    },
+    {
+        label: "akhadeli.com",
+        url: "https://akhadeli.com",
+        icon: ExternalLink,
+    },
+];
 
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    useGSAP(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Title animation
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-        },
-      }
-    );
+        // Title animation
+        gsap.fromTo(
+            titleRef.current,
+            { opacity: 0, y: 30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: titleRef.current,
+                    start: "top 85%",
+                },
+            },
+        );
 
-    // Content animation
-    gsap.fromTo(
-      contentRef.current,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: contentRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-        },
-        delay: 0.3,
-      }
-    );
-  }, []);
+        // Content animation
+        gsap.fromTo(
+            contentRef.current,
+            { opacity: 0, y: 20 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: contentRef.current,
+                    start: "top 85%",
+                },
+                delay: 0.3,
+            },
+        );
+    }, []);
 
-  const contactInfo = [
-    {
-      label: "Email",
-      value: "khadeliabdullah@gmail.com",
-      link: "mailto:khadeliabdullah@gmail.com",
-      icon: Mail,
-      description: "Best way to reach me",
-    },
-    {
-      label: "Phone",
-      value: "+1 (780) 974-9897",
-      link: "tel:+17809749897",
-      icon: Phone,
-      description: "Available during business hours",
-    },
-    {
-      label: "Location",
-      value: "Edmonton, AB, Canada",
-      link: "https://maps.google.com/?q=Edmonton,AB,Canada",
-      icon: MapPin,
-      description: "Mountain Time Zone (UTC-7)",
-    },
-  ];
+    return (
+        <section ref={sectionRef} id="contact" className="py-24 pb-8 px-6">
+            <div className="max-w-6xl mx-auto flex flex-col gap-12">
+                {/* Section Title */}
+                <div ref={titleRef} className="text-center">
+                    <h2 className="text-lg md:text-xl font-light tracking-[0.3em] text-muted-foreground uppercase mb-4">
+                        Contact
+                    </h2>
+                    <div className="w-16 h-px bg-border mx-auto" />
+                </div>
 
-  const socialLinks = [
-    {
-      label: "LinkedIn",
-      url: "https://linkedin.com/in/akhadeli",
-      icon: Linkedin,
-      description: "Professional network",
-    },
-    {
-      label: "GitHub",
-      url: "https://github.com/akhadeli",
-      icon: Github,
-      description: "Code repositories",
-    },
-    {
-      label: "Website",
-      url: "https://akhadeli.com",
-      icon: ExternalLink,
-      description: "Portfolio & blog",
-    },
-  ];
-
-  return (
-    <section ref={sectionRef} id="contact" className="py-24 pb-8 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col gap-12">
-        {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-8">
-          <motion.h2
-            className="text-lg md:text-xl font-light tracking-[0.3em] text-muted-foreground uppercase mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            Contact
-          </motion.h2>
-          <motion.div
-            className="w-16 h-px bg-border mx-auto"
-            initial={{ width: 0 }}
-            whileInView={{ width: 64 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          />
-        </div>
-
-        <div ref={contentRef} className="grid lg:grid-cols-2 gap-16">
-          {/* Left Column - Contact Info */}
-          <div className="space-y-12">
-            {/* Introduction */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h3 className="text-3xl font-light text-foreground mb-6">
-                Let&apos;s Build Something{" "}
-                <span className="text-primary animate-pulse">Amazing</span>
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-6">
-                Ready to bring your next big idea to life? Whether you&apos;re
-                looking for a technical leader, AI engineer, or founding team
-                member, I&apos;d love to hear about your vision and explore how
-                we can work together.
-              </p>
-              <p className="text-muted-foreground/70 leading-relaxed">
-                I&apos;m particularly interested in projects involving AI/ML,
-                performance optimization, team leadership, and innovative user
-                experiences. Let&apos;s discuss how my expertise can help drive
-                your project forward.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Right Column - Contact Form */}
-          <div className="space-y-12">
-            {/* Social Links */}
-            <div>
-              <h4 className="text-foreground font-medium mb-8 flex items-center gap-2">
-                <ExternalLink className="w-5 h-5 text-primary" />
-                Connect Online
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <motion.a
-                      key={social.label}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-card/30 rounded-xl p-6 border border-border hover:border-primary/20 transition-all duration-300 text-center group"
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                    >
-                      <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/10 transition-colors duration-300">
-                        <IconComponent className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-                      </div>
-                      <div className="text-foreground font-medium mb-1">
-                        {social.label}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {social.description}
-                      </div>
-                    </motion.a>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Availability Status */}
-        <motion.div
-          className="bg-card/30 rounded-xl p-6 border border-border hover:border-primary/20 transition-all duration-300"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-            <span className="text-muted-foreground font-medium">
-              Available for New Opportunities
-            </span>
-          </div>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-primary" />
-              <span>Graduated June 2025</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-primary" />
-              <span>Open to full-time positions</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span>Remote or open to relocation</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Contact Information */}
-        <div>
-          <h4 className="text-foreground font-medium mb-8 flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-primary" />
-            Get In Touch
-          </h4>
-          <div className="grid gap-4 w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {contactInfo.map((info, index) => {
-              const IconComponent = info.icon;
-              return (
-                <motion.div
-                  key={info.label}
-                  className="bg-card/30 rounded-xl p-4 sm:p-6 border border-border hover:border-primary/20 transition-all duration-300 group"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors duration-300">
-                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                <div ref={contentRef} className="grid lg:grid-cols-2 gap-16">
+                    {/* Left Column - Introduction */}
+                    <div className="space-y-6">
+                        <h3 className="text-3xl font-light text-foreground">
+                            Let&apos;s build something useful
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed text-lg">
+                            If you need an engineer who can shape product
+                            direction and ship production code, send me a note
+                            with what you&apos;re building.
+                        </p>
+                        <p className="text-muted-foreground/70 leading-relaxed">
+                            I&apos;m especially interested in AI products,
+                            developer tooling, and systems that need both
+                            strong UX and strong performance.
+                        </p>
+                        <div className="flex items-center gap-3 pt-2">
+                            <div className="w-2.5 h-2.5 bg-success rounded-full animate-pulse"></div>
+                            <span className="text-sm text-muted-foreground">
+                                Open to new opportunities — full-time, remote
+                                or relocation
+                            </span>
+                        </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-xs sm:text-sm text-muted-foreground/70 uppercase tracking-wide mb-1">
-                        {info.label}
-                      </div>
-                      <motion.a
-                        href={info.link}
-                        target={
-                          info.link.startsWith("http") ? "_blank" : "_self"
-                        }
-                        className="text-sm sm:text-base text-foreground hover:text-primary transition-colors font-medium block mb-2 truncate"
-                        whileHover={{ x: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {info.value}
-                      </motion.a>
-                      <div className="text-[10px] sm:text-xs text-muted-foreground">
-                        {info.description}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Footer */}
-        <motion.div
-          className="mt-4 pt-16 border-t border-border text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <p className="text-muted-foreground mb-4 leading-relaxed">
-            © 2025 Abdullah Khadeli.
-          </p>
-        </motion.div>
-      </div>
-    </section>
-  );
+                    {/* Right Column - Contact Details */}
+                    <div className="space-y-10 lg:border-l lg:border-border lg:pl-16">
+                        <div>
+                            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground/60 mb-3">
+                                Email
+                            </div>
+                            <motion.a
+                                href="mailto:khadeli@threeark.com"
+                                className="text-xl text-foreground hover:text-primary transition-colors font-medium inline-block"
+                                whileHover={{ x: 5 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                khadeli@threeark.com
+                            </motion.a>
+                        </div>
+
+                        <div>
+                            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground/60 mb-3">
+                                Location
+                            </div>
+                            <div className="flex items-center gap-2 text-muted-foreground">
+                                <MapPin className="w-4 h-4 text-primary" />
+                                <span>
+                                    Edmonton, AB, Canada — Mountain Time
+                                    (UTC-7)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground/60 mb-3">
+                                Elsewhere
+                            </div>
+                            <div className="flex flex-wrap gap-x-8 gap-y-3">
+                                {socialLinks.map((social) => {
+                                    const IconComponent = social.icon;
+                                    return (
+                                        <a
+                                            key={social.label}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+                                        >
+                                            <IconComponent className="w-4 h-4" />
+                                            <span className="text-sm">
+                                                {social.label}
+                                            </span>
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <div className="pt-12 border-t border-border text-center">
+                    <p className="text-muted-foreground leading-relaxed">
+                        © 2025 Abdullah Khadeli.
+                    </p>
+                </div>
+            </div>
+        </section>
+    );
 }

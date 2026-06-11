@@ -2,7 +2,7 @@
 
 import { ReactLenis } from "lenis/react";
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import Preloader from "@/components/front/preloader";
 import Scene from "@/components/front/3d/scene";
 import Hero from "@/components/front/hero";
@@ -13,47 +13,47 @@ import Projects from "@/components/front/projects";
 import Contact from "@/components/front/contact";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1800);
+    }, []);
 
-  return (
-    <ReactLenis root>
-      <div className="relative min-h-screen">
-        {/* Preloader */}
-        <AnimatePresence>{isLoading && <Preloader />}</AnimatePresence>
+    return (
+        <ReactLenis root>
+            <div className="relative min-h-screen">
+                {/* Preloader */}
+                <AnimatePresence>{isLoading && <Preloader />}</AnimatePresence>
 
-        {/* Hero Section with 3D Background */}
-        <div className="relative min-h-screen">
-          {/* 3D Particle Background - Only for Hero */}
-          <div className="relative inset-0 z-0 h-screen">
-            <Scene />
-            <Hero />
-          </div>
-        </div>
+                {/* Hero Section with 3D Background */}
+                <div className="relative min-h-screen">
+                    {/* 3D Particle Background - Only for Hero */}
+                    <div className="relative inset-0 z-0 h-screen">
+                        <Scene />
+                        <Hero />
+                    </div>
+                </div>
 
-        {/* Other Sections with Background Variable */}
-        <div className="bg-background">
-          {/* About Section */}
-          <About />
+                {/* Other Sections with Background Variable */}
+                <div className="bg-background">
+                    {/* About Section */}
+                    <About />
 
-          {/* Experience Section */}
-          <Experience />
+                    {/* Experience Section */}
+                    <Experience />
 
-          {/* Skills Section */}
-          <Skills />
+                    {/* Skills Section */}
+                    <Skills />
 
-          {/* Projects Section */}
-          <Projects />
+                    {/* Projects Section */}
+                    <Projects />
 
-          {/* Contact Section */}
-          <Contact />
-        </div>
-      </div>
-    </ReactLenis>
-  );
+                    {/* Contact Section */}
+                    <Contact />
+                </div>
+            </div>
+        </ReactLenis>
+    );
 }
