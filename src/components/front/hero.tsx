@@ -64,7 +64,7 @@ export default function Hero() {
                         className="mb-4"
                     >
                         <h2 className="text-xs md:text-sm font-light tracking-[0.2em] text-muted-foreground/70 uppercase">
-                            Building Product-First AI Software
+                            Product Engineer
                         </h2>
                     </motion.div>
                 </div>
