@@ -18,7 +18,7 @@ export const simFragment = `
         float s = sin(angle);
         float c = cos(angle);
         float oc = 1.0 - c;
-        
+
         return mat3(
             oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,
             oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,
@@ -96,10 +96,10 @@ export const simFragment = `
         p3 *= norm.w;
         p4 *= taylorInvSqrt(dot(p4, p4));
         vec3 values0 = vec3(dot(p0, x0), dot(p1, x1), dot(p2, x2)); //value of contributions from each corner at point
-        
+
         vec2 values1 = vec2(dot(p3, x3), dot(p4, x4));
         vec3 m0 = max(0.5 - vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2)), 0.0); //(0.5 - x^2) where x is the distance
-        
+
         vec2 m1 = max(0.5 - vec2(dot(x3, x3), dot(x4, x4)), 0.0);
         vec3 temp0 = -6.0 * m0 * m0 * values0;
         vec2 temp1 = -6.0 * m1 * m1 * values1;
@@ -109,8 +109,8 @@ export const simFragment = `
         float dy = temp0[0] * x0.y + temp0[1] * x1.y + temp0[2] * x2.y + temp1[0] * x3.y + temp1[1] * x4.y + mmm0[0] * p0.y + mmm0[1] * p1.y + mmm0[2] * p2.y + mmm1[0] * p3.y + mmm1[1] * p4.y;
         float dz = temp0[0] * x0.z + temp0[1] * x1.z + temp0[2] * x2.z + temp1[0] * x3.z + temp1[1] * x4.z + mmm0[0] * p0.z + mmm0[1] * p1.z + mmm0[2] * p2.z + mmm1[0] * p3.z + mmm1[1] * p4.z;
         // float dw = temp0[0] * x0.w + temp0[1] * x1.w + temp0[2] * x2.w + temp1[0] * x3.w + temp1[1] * x4.w + mmm0[0] * p0.w + mmm0[1] * p1.w + mmm0[2] * p2.w + mmm1[0] * p3.w + mmm1[1] * p4.w;
-        
-        
+
+
         // return vec4(dx, dy, dz, dw) * 49.0;
         return vec4(dx, dy, dz, 0.0) * 49.0;
     }
@@ -118,8 +118,8 @@ export const simFragment = `
         vec4 xNoisePotentialDerivatives = vec4(0.0);
         vec4 yNoisePotentialDerivatives = vec4(0.0);
         // vec4 zNoisePotentialDerivatives = vec4(0.0);
-        
-        
+
+
         for (int i = 0; i < 2; ++i) {
             float twoPowI = pow(2.0, float(i));
             float scale = 0.5 * twoPowI * pow(persistence, float(i));
@@ -150,7 +150,7 @@ export const simFragment = `
         radius += (targetRadius - radius) * mix(0.2, 0.5, circularForce);
 
         vec3 targetPos = vec3(cos(angle), sin(angle), 0.0) * radius;
-        
+
         pos.xy += (targetPos.xy - pos.xy) * 0.01;
 
         pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.0005;
@@ -159,7 +159,16 @@ export const simFragment = `
         vec2 dir = normalize(pos.xy - mouse);
 
         if (uMouseClicked) {
-            pos.xy -= dir * 0.05 * smoothstep(0.5, 0.0, distToMouse);
+            float influence = smoothstep(0.5, 0.0, distToMouse);
+            // Perpendicular of the radial direction — pushing along it makes
+            // the particles orbit the click point counter-clockwise
+            vec2 tangent = vec2(-dir.y, dir.x);
+            // Per-particle speed variation so the vortex doesn't look rigid
+            float spin = info.y * 2.0;
+            pos.xy += tangent * 0.005 * spin * influence;
+            // Slight inward pull keeps particles captured in the vortex
+            // (tangential motion alone would slowly fling them outward)
+            pos.xy -= dir * 0.001 * influence;
         } else {
             pos.xy += dir * 0.01 * smoothstep(0.5, 0.0, distToMouse);
         }
@@ -170,7 +179,7 @@ export const simFragment = `
         // float rotationAngle = 2.0 * rotationSpeed;
         // mat3 rotMat = rotationMatrix(rotationAxis, rotationAngle);
         // pos.xyz = rotMat * pos.xyz;
-        
+
         // Display the texture directly
         // gl_FragColor = vec4(pos.xyz, 1.0);
         gl_FragColor = vec4(pos.xy, 1.0, 1.0);
