@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useLayoutEffect } from "react";
+import { useEffect, useRef, useMemo, useState, useLayoutEffect } from "react";
 import { useFrame, createPortal } from "@react-three/fiber";
 import { useFBO } from "@react-three/drei";
 import * as THREE from "three";
@@ -6,7 +6,7 @@ import { simVertex } from "./shaders/sim-vertex";
 import { simFragment } from "./shaders/sim-frag";
 import { vertexParticles } from "./shaders/vertex-particles";
 import { fragment } from "./shaders/fragment";
-import { getGPUSettings, ParticleSettings } from "./utils/gpu-tier";
+import { getGPUSettings, type ParticleSettings } from "./utils/gpu-tier";
 // import { vertex as vertexParticles, fragment } from "./shaders/droom-shaders";
 
 const FBOSetup = () => {
@@ -18,16 +18,14 @@ const FBOSetup = () => {
   return { fboScene, fboCamera };
 };
 
-// Create texture function
 const FboTextureGenerator = (size: number) => {
-  // Create array with 4 channels (RGBA) for each texel
   const data = new Float32Array(size * size * 4);
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
       const index = (i * size + j) * 4;
       const theta = Math.random() * Math.PI * 2;
       const r = 0.5 + Math.random() * 0.5;
-      // Generate random RGB values for each texel
+
       data[index] = Math.cos(theta) * r;
       data[index + 1] = Math.sin(theta) * r;
       data[index + 2] = 1.0;
@@ -59,6 +57,7 @@ const InfoTextureGenerator = (size: number) => {
       data[index + 3] = 1.0;
     }
   }
+
   const texture = new THREE.DataTexture(
     data,
     size,
@@ -90,40 +89,51 @@ const UvGenerator = (size: number) => {
   return { positions, uv };
 };
 
-export function Particles() {
-  const points = useRef<THREE.Points>(null);
-  // Since fiber 9.6, the `uniforms` prop is copied into the material rather
-  // than shared by reference, so per-frame mutations must go through the
-  // material's own uniforms via these refs
-  const simMaterial = useRef<THREE.ShaderMaterial>(null);
-  const renderMaterial = useRef<THREE.ShaderMaterial>(null);
-  const [loaded, setLoaded] = useState(false);
-  const [gpuSettings, setGpuSettings] = useState<ParticleSettings>({
-    size: 256,
-  });
+export function Particles({ active = true }: { active?: boolean }) {
+  const [gpuSettings, setGpuSettings] = useState<ParticleSettings | null>(null);
 
-  // Initialize GPU settings
   useLayoutEffect(() => {
+    let cancelled = false;
+
     const initGPU = async () => {
       const settings = await getGPUSettings();
-      setGpuSettings(settings);
-      setLoaded(true);
+      if (!cancelled) setGpuSettings(settings);
     };
+
     initGPU();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Create texture only once when component mounts
+  if (!gpuSettings) return null;
+
+  return <ParticleSystem active={active} settings={gpuSettings} />;
+}
+
+function ParticleSystem({
+  active,
+  settings,
+}: {
+  active: boolean;
+  settings: ParticleSettings;
+}) {
+  const points = useRef<THREE.Points>(null);
+  const simMaterial = useRef<THREE.ShaderMaterial>(null);
+  const renderMaterial = useRef<THREE.ShaderMaterial>(null);
+
   const fboTexture = useMemo(() => {
-    return FboTextureGenerator(gpuSettings.size);
-  }, [gpuSettings.size]);
+    return FboTextureGenerator(settings.size);
+  }, [settings.size]);
 
   const infoTexture = useMemo(() => {
-    return InfoTextureGenerator(gpuSettings.size);
-  }, [gpuSettings.size]);
+    return InfoTextureGenerator(settings.size);
+  }, [settings.size]);
 
   const { positions, uv } = useMemo(
-    () => UvGenerator(gpuSettings.size),
-    [gpuSettings.size]
+    () => UvGenerator(settings.size),
+    [settings.size]
   );
 
   const { fboScene, fboCamera } = useMemo(() => FBOSetup(), []);
@@ -140,7 +150,7 @@ export function Particles() {
     }),
     [fboTexture, infoTexture]
   );
-  // Create time uniform reference
+
   const uniforms = useMemo(
     () => ({
       uPositions: { value: null as THREE.Texture | null },
@@ -151,62 +161,68 @@ export function Particles() {
     []
   );
 
-  let fbo1 = useFBO(gpuSettings.size, gpuSettings.size, {
+  const fbo1 = useFBO(settings.size, settings.size, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
     format: THREE.RGBAFormat,
+    depthBuffer: false,
+    stencilBuffer: false,
+    generateMipmaps: false,
   });
 
-  let fbo2 = useFBO(gpuSettings.size, gpuSettings.size, {
+  const fbo2 = useFBO(settings.size, settings.size, {
     type: THREE.FloatType,
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
     format: THREE.RGBAFormat,
+    depthBuffer: false,
+    stencilBuffer: false,
+    generateMipmaps: false,
   });
 
-  // Update time uniform
+  const pingPongRef = useRef(true);
   const isFirstFrameRef = useRef(true);
 
-  useFrame(({ gl, scene, camera, clock }) => {
-    if (points.current && simMaterial.current && renderMaterial.current) {
+  useEffect(() => {
+    return () => {
+      fboTexture.dispose();
+      infoTexture.dispose();
+    };
+  }, [fboTexture, infoTexture]);
+
+  useFrame(({ gl, clock }) => {
+    if (
+      active &&
+      points.current &&
+      simMaterial.current &&
+      renderMaterial.current
+    ) {
       const simUniforms = simMaterial.current.uniforms;
       const renderUniforms = renderMaterial.current.uniforms;
+      const sourceTarget = pingPongRef.current ? fbo2 : fbo1;
+      const destTarget = pingPongRef.current ? fbo1 : fbo2;
 
-      // Update time values
       simUniforms.uTime.value += 0.05;
       renderUniforms.uTime.value = clock.getElapsedTime();
 
-      // For the first frame, use the original texture data
-      // For subsequent frames, use the previous simulation result
       if (isFirstFrameRef.current) {
         simUniforms.uPositions.value = fboTexture;
         isFirstFrameRef.current = false;
       } else {
-        simUniforms.uPositions.value = fbo2.texture;
+        simUniforms.uPositions.value = sourceTarget.texture;
       }
-      // Use the simulation result (fbo1) for particles
-      renderUniforms.uPositions.value = fbo1.texture;
+      renderUniforms.uPositions.value = destTarget.texture;
 
-      // Render simulation to fbo1
-      gl.setRenderTarget(fbo1);
-      gl.render(
-        fboScene as unknown as typeof scene,
-        fboCamera as unknown as typeof camera
-      );
-      gl.setRenderTarget(null);
+      const previousRenderTarget = gl.getRenderTarget();
 
-      // Render the scene
-      gl.render(scene, camera);
+      gl.setRenderTarget(destTarget);
+      gl.render(fboScene, fboCamera);
+      gl.setRenderTarget(previousRenderTarget);
 
-      // Swap FBOs for next frame
-      const temp = fbo1;
-      fbo1 = fbo2;
-      fbo2 = temp;
+      pingPongRef.current = !pingPongRef.current;
     }
   });
-
-  if (!loaded) return null;
 
   return (
     <>
@@ -217,11 +233,11 @@ export function Particles() {
         </bufferGeometry>
         <shaderMaterial
           ref={renderMaterial}
-          side={THREE.DoubleSide}
           fragmentShader={fragment}
           vertexShader={vertexParticles}
           uniforms={uniforms}
           transparent={true}
+          depthWrite={false}
         />
       </points>
       {createPortal(
@@ -236,11 +252,9 @@ export function Particles() {
         </mesh>,
         fboScene as unknown as Parameters<typeof createPortal>[1]
       )}
-      {/* Create dummy mesh to detect pointer events - positioned at Z=1 to match particles */}
       <mesh
         position={[0, 0, 1]}
         onPointerMove={(e) => {
-          // Since the mesh is now at Z=1, e.point will directly match the particles' z-depth
           simMaterial.current?.uniforms.uMouse.value.set(e.point.x, e.point.y);
         }}
         onPointerDown={() => {
@@ -253,7 +267,11 @@ export function Particles() {
         }}
       >
         <planeGeometry args={[4, 4]} />
-        <meshBasicMaterial transparent opacity={0} />
+        <meshBasicMaterial
+          colorWrite={false}
+          depthWrite={false}
+          depthTest={false}
+        />
       </mesh>
     </>
   );

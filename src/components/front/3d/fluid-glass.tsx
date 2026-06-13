@@ -23,6 +23,8 @@ export function FluidGlass({
     distortion = 0.6,
     distortionScale = 0.7,
     temporalDistortion = 0.2,
+    samples = 4,
+    resolution = 768,
 }: {
     ior?: number;
     thickness?: number;
@@ -30,6 +32,8 @@ export function FluidGlass({
     distortion?: number;
     distortionScale?: number;
     temporalDistortion?: number;
+    samples?: number;
+    resolution?: number;
 }) {
     const viewport = useThree((state) => state.viewport);
     const camera = useThree((state) => state.camera);
@@ -54,8 +58,8 @@ export function FluidGlass({
                 distortion={distortion}
                 distortionScale={distortionScale}
                 temporalDistortion={temporalDistortion}
-                samples={6}
-                resolution={1024}
+                samples={samples}
+                resolution={resolution}
                 background={BACKGROUND}
             />
         </mesh>
