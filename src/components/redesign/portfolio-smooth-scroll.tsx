@@ -3,7 +3,7 @@
 import { ReactLenis, type LenisRef } from "lenis/react";
 import { useEffect, useRef, useState } from "react";
 
-export default function RedesignLenis({
+export default function PortfolioSmoothScroll({
     children,
 }: {
     children: React.ReactNode;

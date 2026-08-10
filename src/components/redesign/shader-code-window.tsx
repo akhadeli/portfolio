@@ -2,7 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { simFragment } from "@/components/front/3d/shaders/sim-frag";
-import styles from "./code-storage-redesign.module.css";
+import styles from "./portfolio-landing.module.css";
 
 const WINDOW_LINES = 10;
 const LINE_HEIGHT = 19;

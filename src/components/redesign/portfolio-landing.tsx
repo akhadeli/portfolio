@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import styles from "./code-storage-redesign.module.css";
+import styles from "./portfolio-landing.module.css";
 import ParticleCloud from "./particle-cloud";
 import ProjectCarousel from "./project-carousel";
 import ShaderCodeWindow from "./shader-code-window";
@@ -386,11 +386,11 @@ function PersonalExperienceSection() {
     );
 }
 
-export default function CodeStorageRedesign({
-    variant = "storage",
+export default function PortfolioLanding({
+    variant = "editorial",
     headingRefractionStrength = 0.68,
 }: {
-    variant?: "storage" | "personal";
+    variant?: "editorial" | "personal";
     headingRefractionStrength?: number;
 }) {
     const isPersonal = variant === "personal";

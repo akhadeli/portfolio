@@ -1,13 +1,13 @@
-import CodeStorageRedesign from "@/components/redesign/code-storage-redesign";
-import RedesignLenis from "@/components/redesign/redesign-lenis";
+import PortfolioLanding from "@/components/redesign/portfolio-landing";
+import PortfolioSmoothScroll from "@/components/redesign/portfolio-smooth-scroll";
 
 export default function Home() {
     return (
-        <RedesignLenis>
-            <CodeStorageRedesign
+        <PortfolioSmoothScroll>
+            <PortfolioLanding
                 variant="personal"
                 headingRefractionStrength={0.68}
             />
-        </RedesignLenis>
+        </PortfolioSmoothScroll>
     );
 }

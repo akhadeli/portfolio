@@ -8,7 +8,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import styles from "./code-storage-redesign.module.css";
+import styles from "./portfolio-landing.module.css";
 
 const nexusixImages = [
     {

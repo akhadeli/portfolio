@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CodeStorageRedesign from "@/components/redesign/code-storage-redesign";
+import PortfolioLanding from "@/components/redesign/portfolio-landing";
 
 export const metadata: Metadata = {
     title: "Portfolio Redesign Preview",
@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function RedesignPage() {
-    return <CodeStorageRedesign />;
+    return <PortfolioLanding />;
 }
