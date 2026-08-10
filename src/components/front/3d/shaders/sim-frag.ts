@@ -141,25 +141,47 @@ export const simFragment = `
 
         float radius = length(pos.xy) * 1.0;
 
-        float circularForce = 1. - smoothstep(0.3, 1.4, pos.x - radius);
+        float circularForce = 1. - smoothstep(
+            0.3,
+            1.4,
+            pos.x - radius
+        );
 
-        float angle = atan(pos.y, pos.x) - info.y * 0.3 * mix(0.5, 1., circularForce);
+        float angle = atan(pos.y, pos.x)
+            - info.y * 0.3 * mix(0.5, 1., circularForce);
 
-        float targetRadius = mix(info.x, 1.0, 0.5 + 0.45 * sin(angle*2. + uTime*0.6));
+        float targetRadius = mix(
+            info.x,
+            1.0,
+            0.5 + 0.45 * sin(angle * 2. + uTime * 0.6)
+        );
 
-        radius += (targetRadius - radius) * mix(0.2, 0.5, circularForce);
+        radius += (targetRadius - radius)
+            * mix(0.2, 0.5, circularForce);
 
-        vec3 targetPos = vec3(cos(angle), sin(angle), 0.0) * radius;
+        vec3 targetPos = vec3(
+            cos(angle),
+            sin(angle),
+            0.0
+        ) * radius;
 
         pos.xy += (targetPos.xy - pos.xy) * 0.01;
 
-        pos.xy += curl(pos.xyz * 4., uTime*0.1, 0.1).xy * 0.0005;
+        pos.xy += curl(
+            pos.xyz * 4.,
+            uTime * 0.1,
+            0.1
+        ).xy * 0.0005;
 
         float distToMouse = length(pos.xy - mouse);
         vec2 dir = normalize(pos.xy - mouse);
 
         if (uMouseClicked) {
-            float influence = smoothstep(0.5, 0.0, distToMouse);
+            float influence = smoothstep(
+                0.5,
+                0.0,
+                distToMouse
+            );
             // Perpendicular of the radial direction — pushing along it makes
             // the particles orbit the click point counter-clockwise
             vec2 tangent = vec2(-dir.y, dir.x);
@@ -170,7 +192,11 @@ export const simFragment = `
             // (tangential motion alone would slowly fling them outward)
             pos.xy -= dir * 0.001 * influence;
         } else {
-            pos.xy += dir * 0.01 * smoothstep(0.5, 0.0, distToMouse);
+            pos.xy += dir * 0.01 * smoothstep(
+                0.5,
+                0.0,
+                distToMouse
+            );
         }
 
         // Apply 3D rotation as final step

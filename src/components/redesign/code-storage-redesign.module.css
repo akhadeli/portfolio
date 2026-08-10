@@ -169,6 +169,37 @@
     white-space: nowrap;
 }
 
+.shaderWindow {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: 190px;
+    overflow: hidden;
+}
+
+.shaderTrack {
+    animation-name: shaderLineCycle;
+    animation-iteration-count: infinite;
+    will-change: transform;
+}
+
+.shaderLine {
+    display: block;
+    height: 19px;
+    line-height: 19px;
+    white-space: pre;
+}
+
+.shaderWindow:hover .shaderTrack {
+    animation-play-state: paused;
+}
+
+@keyframes shaderLineCycle {
+    to {
+        transform: translateY(var(--shader-cycle-distance));
+    }
+}
+
 .keyword {
     color: var(--red);
 }
@@ -1533,6 +1564,11 @@
 
     .projectCarouselImage {
         width: 100%;
+    }
+
+    .shaderLine {
+        font-size: 10px;
+        letter-spacing: -0.02em;
     }
 
     .carouselPrevious {

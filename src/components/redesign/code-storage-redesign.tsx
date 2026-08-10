@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import styles from "./code-storage-redesign.module.css";
 import ParticleCloud from "./particle-cloud";
 import ProjectCarousel from "./project-carousel";
+import ShaderCodeWindow from "./shader-code-window";
 
 const experiences = [
     {
@@ -358,8 +359,8 @@ export default function CodeStorageRedesign({
                             <span className={styles.navRow}>
                                 <a href="#top">INDEX</a> / <a href="#contact">CONTACT</a>
                             </span>
-                            <a href="#work">WORK</a>
                             <a href="#experience">EXPERIENCE</a>
+                            <a href="#work">WORK</a>
                         </>
                     ) : (
                         <>
@@ -416,29 +417,7 @@ export default function CodeStorageRedesign({
                             to the outcome.
                         </p>
 
-                        <div
-                            className={styles.codeBlock}
-                            aria-label="Rust particle simulation step"
-                        >
-                            <span className={styles.fence}>```rust</span>
-                            <code>
-                                particles.
-                                <span className={styles.property}>par_iter_mut</span>()
-                                .<span className={styles.property}>for_each</span>(|p| {"{"}
-                                <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <span className={styles.keyword}>let</span> force
-                                &nbsp;=&nbsp;field.
-                                <span className={styles.property}>sample</span>(p.position);
-                                <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;p.velocity&nbsp;+=&nbsp;force&nbsp;*&nbsp;dt;
-                                <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;p.position&nbsp;+=&nbsp;p.velocity&nbsp;*&nbsp;dt;
-                                <br />
-                                {"}"});
-                            </code>
-                            <span className={styles.fence}>```</span>
-                        </div>
+                        <ShaderCodeWindow />
                     </section>
 
                     <aside className={`${styles.visual} ${styles.heroVisual}`} aria-label="Interactive particle system illustration">
@@ -463,7 +442,7 @@ export default function CodeStorageRedesign({
                 </div>
 
                 {isPersonal ? (
-                    <PersonalWorkSection />
+                    <PersonalExperienceSection />
                 ) : (
                 <div className={styles.pair} id="work">
                     <section className={styles.narrative}>
@@ -576,7 +555,7 @@ export default function CodeStorageRedesign({
                 )}
 
                 {isPersonal ? (
-                    <PersonalExperienceSection />
+                    <PersonalWorkSection />
                 ) : (
                 <div className={styles.pair} id="experience">
                     <section className={styles.narrative}>
