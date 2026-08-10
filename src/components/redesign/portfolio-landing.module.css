@@ -681,9 +681,9 @@
 }
 
 .personal .narrative p {
-    color: var(--muted);
-    line-height: 1.72;
-    letter-spacing: -0.012em;
+    color: var(--copy, var(--muted));
+    line-height: 1.75;
+    letter-spacing: 0.02em;
 }
 
 .personal .kicker {
@@ -695,7 +695,7 @@
 .personal .heroNarrative > p:nth-of-type(2),
 .personal .heroNarrative > p:nth-of-type(3),
 .personal .heroNarrative > p:nth-of-type(4) {
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .personal .codeBlock {
@@ -768,7 +768,7 @@
 
 .personal .markdownList li {
     grid-template-columns: 20px minmax(0, 1fr);
-    color: var(--muted);
+    color: var(--copy, var(--muted));
     line-height: 1.6;
 }
 
@@ -1052,7 +1052,7 @@
     .personal .heroNarrative > p:nth-of-type(2),
     .personal .heroNarrative > p:nth-of-type(3),
     .personal .heroNarrative > p:nth-of-type(4) {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .personal .codeBlock {
@@ -1066,6 +1066,7 @@
 .personal {
     --background: #0b0b0c;
     --foreground: #f0f0f1;
+    --copy: #cccccf;
     --muted: #a6a6aa;
     --line: rgba(240, 240, 241, 0.22);
     --red: #d7b6b3;
@@ -1074,6 +1075,11 @@
     --string: #bac8bd;
     overflow-x: clip;
     background: var(--background);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    font-variant-ligatures: none;
 }
 
 .personal .header nav > * {
@@ -1284,9 +1290,13 @@
 .personalProject p,
 .personalExperienceCopy p {
     margin: 0;
+    color: var(--copy);
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+}
+
+.personal .metaLine {
     color: var(--muted);
-    line-height: 1.72;
-    letter-spacing: -0.012em;
 }
 
 .personalProject,
