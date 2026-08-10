@@ -94,11 +94,13 @@ export function Particles({
   settings,
   onReady,
   readyAfterFrames = 1,
+  motionSpeed = 1,
 }: {
   active?: boolean;
   settings?: ParticleSettings;
   onReady?: () => void;
   readyAfterFrames?: number;
+  motionSpeed?: number;
 }) {
   const [detectedSettings, setDetectedSettings] =
     useState<ParticleSettings | null>(null);
@@ -129,6 +131,7 @@ export function Particles({
       settings={resolvedSettings}
       onReady={onReady}
       readyAfterFrames={readyAfterFrames}
+      motionSpeed={motionSpeed}
     />
   );
 }
@@ -138,11 +141,13 @@ function ParticleSystem({
   settings,
   onReady,
   readyAfterFrames,
+  motionSpeed,
 }: {
   active: boolean;
   settings: ParticleSettings;
   onReady?: () => void;
   readyAfterFrames: number;
+  motionSpeed: number;
 }) {
   const points = useRef<THREE.Points>(null);
   const simMaterial = useRef<THREE.ShaderMaterial>(null);
@@ -172,8 +177,10 @@ function ParticleSystem({
       progress: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uMouseClicked: { value: false },
+      uMotionSpeed: { value: motionSpeed },
+      uFrameScale: { value: 1 },
     }),
-    [fboTexture, infoTexture]
+    [fboTexture, infoTexture, motionSpeed]
   );
 
   const uniforms = useMemo(
@@ -218,7 +225,7 @@ function ParticleSystem({
     };
   }, [fboTexture, infoTexture]);
 
-  useFrame(({ gl, clock }) => {
+  useFrame(({ gl, clock }, delta) => {
     if (
       active &&
       points.current &&
@@ -230,8 +237,14 @@ function ParticleSystem({
       const sourceTarget = pingPongRef.current ? fbo2 : fbo1;
       const destTarget = pingPongRef.current ? fbo1 : fbo2;
 
-      simUniforms.uTime.value += 0.05;
-      renderUniforms.uTime.value = clock.getElapsedTime();
+      // The original 0.05-per-frame increment equaled 3 time units/second at
+      // 60fps. Use delta time so motion stays consistent across refresh rates,
+      // and clamp long pauses so returning to the tab cannot cause a jump.
+      const frameDelta = Math.min(delta, 1 / 20);
+      simUniforms.uTime.value += frameDelta * 3 * motionSpeed;
+      simUniforms.uMotionSpeed.value = motionSpeed;
+      simUniforms.uFrameScale.value = frameDelta * 60;
+      renderUniforms.uTime.value = clock.getElapsedTime() * motionSpeed;
 
       if (isFirstFrameRef.current) {
         simUniforms.uPositions.value = fboTexture;

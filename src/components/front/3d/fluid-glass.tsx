@@ -6,6 +6,7 @@ import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useMemo } from "react";
 
 const GLASS_Z = 1.5;
+const TRANSMISSION_DARK_SURFACE_GAIN = 3.7;
 // Fullscreen pane of "fluid" glass between the camera and the particle
 // ring, so the whole animation is viewed through it. The liquid feel
 // comes from the material's animated noise distortion rather than the
@@ -24,7 +25,7 @@ export function FluidGlass({
     temporalDistortion = 0.2,
     samples = 4,
     resolution = 768,
-    backgroundColor = "#000000",
+    backgroundColor = "#0b0b0c",
 }: {
     ior?: number;
     thickness?: number;
@@ -45,8 +46,15 @@ export function FluidGlass({
         0,
         GLASS_Z,
     ]);
+    // MeshTransmissionMaterial renders its background through an offscreen
+    // texture before the main output pass. Very dark colors are attenuated in
+    // that path, turning #0b0b0c into near-black. Compensate in linear space so
+    // the final canvas output matches the surrounding CSS surface.
     const background = useMemo(
-        () => new THREE.Color(backgroundColor),
+        () =>
+            new THREE.Color(backgroundColor).multiplyScalar(
+                TRANSMISSION_DARK_SURFACE_GAIN,
+            ),
         [backgroundColor],
     );
 

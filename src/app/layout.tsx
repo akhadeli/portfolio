@@ -131,6 +131,7 @@ const jsonLd = {
             sameAs: [
                 "https://linkedin.com/in/akhadeli",
                 "https://github.com/akhadeli",
+                "https://x.com/khadelidotai",
             ],
         },
         {

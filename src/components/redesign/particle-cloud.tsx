@@ -12,15 +12,17 @@ import {
 export default function ParticleCloud({
     refractive = false,
     scale = 1,
-    glassBackground = "#000000",
+    glassBackground = "#0b0b0c",
     warmupMs = 0,
     minWidth = 1081,
+    motionSpeed = 1,
 }: {
     refractive?: boolean;
     scale?: number;
     glassBackground?: string;
     warmupMs?: number;
     minWidth?: number;
+    motionSpeed?: number;
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDesktop, setIsDesktop] = useState(false);
@@ -153,6 +155,7 @@ export default function ParticleCloud({
             data-gpu-tier={gpuSettings?.tier}
             data-particle-count={gpuSettings ? gpuSettings.size ** 2 : undefined}
             data-envelope-compensation={envelopeCompensation.toFixed(3)}
+            data-motion-speed={motionSpeed}
         >
             {gpuSettings ? (
                 <Canvas
@@ -171,6 +174,7 @@ export default function ParticleCloud({
                             settings={gpuSettings}
                             onReady={() => setParticlesReady(true)}
                             readyAfterFrames={75}
+                            motionSpeed={motionSpeed}
                         />
                     </group>
                     {refractive ? (
@@ -178,6 +182,11 @@ export default function ParticleCloud({
                             backgroundColor={glassBackground}
                             samples={gpuSettings.glassSamples}
                             resolution={gpuSettings.glassResolution}
+                            ior={1.1}
+                            thickness={1.4}
+                            chromaticAberration={0.055}
+                            distortion={0.85}
+                            temporalDistortion={0}
                         />
                     ) : null}
                 </Canvas>

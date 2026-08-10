@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactLenis, type LenisRef } from "lenis/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export default function PortfolioSmoothScroll({
     children,
@@ -10,6 +10,45 @@ export default function PortfolioSmoothScroll({
 }) {
     const lenisRef = useRef<LenisRef>(null);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+    useLayoutEffect(() => {
+        const previousScrollRestoration = window.history.scrollRestoration;
+        window.history.scrollRestoration = "manual";
+
+        // Keep real fragment links useful, but do not let a refresh or a fresh
+        // visit inherit a stale scroll position from the previous document.
+        if (window.location.hash) {
+            return () => {
+                window.history.scrollRestoration = previousScrollRestoration;
+            };
+        }
+
+        let frame = 0;
+        let attempts = 0;
+        const resetScroll = () => {
+            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+            const lenis = lenisRef.current?.lenis;
+            if (lenis) {
+                lenis.scrollTo(0, { immediate: true, force: true });
+                return;
+            }
+
+            // ReactLenis creates its instance in an effect. Retry for a few
+            // frames so its internal target cannot restore the old position.
+            if (attempts < 4) {
+                attempts += 1;
+                frame = window.requestAnimationFrame(resetScroll);
+            }
+        };
+
+        resetScroll();
+
+        return () => {
+            window.cancelAnimationFrame(frame);
+            window.history.scrollRestoration = previousScrollRestoration;
+        };
+    }, []);
 
     useEffect(() => {
         const media = window.matchMedia("(prefers-reduced-motion: reduce)");

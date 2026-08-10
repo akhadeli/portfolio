@@ -8,6 +8,8 @@ export const simFragment = `
     varying vec3 vPosition;
     uniform vec2 uMouse;
     uniform bool uMouseClicked;
+    uniform float uMotionSpeed;
+    uniform float uFrameScale;
     float PI = 3.141592653589793238;
 
     #define PI 3.1415926538
@@ -165,13 +167,16 @@ export const simFragment = `
             0.0
         ) * radius;
 
-        pos.xy += (targetPos.xy - pos.xy) * 0.01;
+        pos.xy += (targetPos.xy - pos.xy)
+            * 0.01
+            * uMotionSpeed
+            * uFrameScale;
 
         pos.xy += curl(
             pos.xyz * 4.,
             uTime * 0.1,
             0.1
-        ).xy * 0.0005;
+        ).xy * 0.0005 * uMotionSpeed * uFrameScale;
 
         float distToMouse = length(pos.xy - mouse);
         vec2 dir = normalize(pos.xy - mouse);
@@ -187,12 +192,12 @@ export const simFragment = `
             vec2 tangent = vec2(-dir.y, dir.x);
             // Per-particle speed variation so the vortex doesn't look rigid
             float spin = info.y * 2.0;
-            pos.xy += tangent * 0.005 * spin * influence;
+            pos.xy += tangent * 0.005 * spin * influence * uFrameScale;
             // Slight inward pull keeps particles captured in the vortex
             // (tangential motion alone would slowly fling them outward)
-            pos.xy -= dir * 0.001 * influence;
+            pos.xy -= dir * 0.001 * influence * uFrameScale;
         } else {
-            pos.xy += dir * 0.01 * smoothstep(
+            pos.xy += dir * 0.01 * uFrameScale * smoothstep(
                 0.5,
                 0.0,
                 distToMouse

@@ -296,7 +296,7 @@ function MorphScene({ targetIndex }: { targetIndex: number }) {
         powerPreference: "high-performance",
       }}
     >
-      <color attach="background" args={["#000000"]} />
+      <color attach="background" args={["#0b0b0c"]} />
       <MorphParticles targetIndex={targetIndex} />
       <OrbitControls
         enableDamping
@@ -329,7 +329,7 @@ export default function ParticleMorphLab() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black text-foreground">
+    <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:64px_64px]" />
       <div className="absolute inset-0 [background:linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0)_38%,rgba(0,0,0,0.32)_100%)]" />
 

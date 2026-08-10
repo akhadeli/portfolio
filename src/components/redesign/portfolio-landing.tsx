@@ -424,7 +424,10 @@ export default function PortfolioLanding({
 
             <header className={styles.header}>
                 <div className={styles.identity}>
-                    <a href="#top">ABDULLAH KHADELI █</a>
+                    <a href="#top">
+                        ABDULLAH KHADELI
+                        <span className={styles.identityCursor} aria-hidden="true">█</span>
+                    </a>
                     {isPersonal ? null : (
                         <>
                             <span>PRODUCT ENGINEER</span>
@@ -504,9 +507,10 @@ export default function PortfolioLanding({
                             <ParticleCloud
                                 refractive={isPersonal}
                                 scale={isPersonal ? 1.12 : 1}
-                                glassBackground="#000000"
+                                glassBackground="#0b0b0c"
                                 warmupMs={isPersonal ? 1300 : 0}
                                 minWidth={isPersonal ? 1160 : 1081}
+                                motionSpeed={3}
                             />
                         </div>
                         <div className={`${styles.callout} ${styles.calloutHero}`}>
@@ -722,11 +726,13 @@ export default function PortfolioLanding({
                             hear about it. Send me the constraints.
                         </p>
                         <p className={styles.contactLinks}>
-                            {isPersonal ? null : "[ "}<a href="mailto:khadeli@threeark.com">EMAIL</a>{isPersonal ? " ↗" : " ]"}
+                            {isPersonal ? null : "[ "}<a href="mailto:khadeli@threeark.com">EMAIL</a>{isPersonal ? null : " ]"}
                             <br />
-                            {isPersonal ? null : "[ "}<a href="https://linkedin.com/in/akhadeli" target="_blank" rel="noopener noreferrer">LINKEDIN</a>{isPersonal ? " ↗" : " ]"}
+                            {isPersonal ? null : "[ "}<a href="https://linkedin.com/in/akhadeli" target="_blank" rel="noopener noreferrer">LINKEDIN</a>{isPersonal ? null : " ]"}
                             <br />
-                            {isPersonal ? null : "[ "}<a href="https://github.com/akhadeli" target="_blank" rel="noopener noreferrer">GITHUB</a>{isPersonal ? " ↗" : " ]"}
+                            {isPersonal ? null : "[ "}<a href="https://github.com/akhadeli" target="_blank" rel="noopener noreferrer">GITHUB</a>{isPersonal ? null : " ]"}
+                            <br />
+                            {isPersonal ? null : "[ "}<a href="https://x.com/khadelidotai" target="_blank" rel="noopener noreferrer">X / @KHADELIDOTAI</a>{isPersonal ? null : " ]"}
                         </p>
                         <p>
                             {isPersonal

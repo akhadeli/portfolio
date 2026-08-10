@@ -76,6 +76,24 @@
     text-decoration: none;
 }
 
+.identityCursor {
+    display: inline-block;
+    margin-left: 0.08em;
+    animation: identityCursorBlink 1.05s steps(1, end) infinite;
+}
+
+@keyframes identityCursorBlink {
+    0%,
+    46% {
+        opacity: 1;
+    }
+
+    47%,
+    100% {
+        opacity: 0;
+    }
+}
+
 .header nav {
     align-items: flex-end;
     text-align: right;
@@ -755,9 +773,9 @@
 }
 
 .personal .markdownList li::before {
-    content: "↗";
+    content: "*";
     padding: 0;
-    color: #7f8cff;
+    color: var(--muted);
 }
 
 .personal .project,
@@ -1046,7 +1064,7 @@
 /* Iteration two borrows editorial type and spacing—not another site's palette
    or component language. Keep the treatment deliberately neutral and raw. */
 .personal {
-    --background: #000000;
+    --background: #0b0b0c;
     --foreground: #f0f0f1;
     --muted: #a6a6aa;
     --line: rgba(240, 240, 241, 0.22);
@@ -1155,7 +1173,7 @@
 }
 
 .personal .artifactFrame {
-    border-color: var(--line);
+    border: 0;
     border-radius: 0;
     box-shadow: none;
 }
@@ -1192,7 +1210,7 @@
 }
 
 .personal .mobileArtifact {
-    border-color: var(--line);
+    border: 0;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
@@ -1313,7 +1331,7 @@
     width: 342px;
     aspect-ratio: 342 / 700;
     overflow: hidden;
-    border: 1px solid var(--line);
+    border: 0;
     background: #080809;
 }
 
@@ -1344,8 +1362,8 @@
     width: 442px;
     aspect-ratio: 8.5 / 11;
     overflow: hidden;
-    border: 1px solid var(--line);
-    background: #fff;
+    border: 0;
+    background: transparent;
 }
 
 .personalReportMedia img {
@@ -1475,6 +1493,12 @@
     }
     to {
         transform: scaleY(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .identityCursor {
+        animation: none;
     }
 }
 
