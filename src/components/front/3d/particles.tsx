@@ -89,15 +89,28 @@ const UvGenerator = (size: number) => {
   return { positions, uv };
 };
 
-export function Particles({ active = true }: { active?: boolean }) {
-  const [gpuSettings, setGpuSettings] = useState<ParticleSettings | null>(null);
+export function Particles({
+  active = true,
+  settings,
+  onReady,
+  readyAfterFrames = 1,
+}: {
+  active?: boolean;
+  settings?: ParticleSettings;
+  onReady?: () => void;
+  readyAfterFrames?: number;
+}) {
+  const [detectedSettings, setDetectedSettings] =
+    useState<ParticleSettings | null>(null);
 
   useLayoutEffect(() => {
     let cancelled = false;
 
+    if (settings) return;
+
     const initGPU = async () => {
-      const settings = await getGPUSettings();
-      if (!cancelled) setGpuSettings(settings);
+      const detected = await getGPUSettings();
+      if (!cancelled) setDetectedSettings(detected);
     };
 
     initGPU();
@@ -105,19 +118,31 @@ export function Particles({ active = true }: { active?: boolean }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [settings]);
 
-  if (!gpuSettings) return null;
+  const resolvedSettings = settings ?? detectedSettings;
+  if (!resolvedSettings) return null;
 
-  return <ParticleSystem active={active} settings={gpuSettings} />;
+  return (
+    <ParticleSystem
+      active={active}
+      settings={resolvedSettings}
+      onReady={onReady}
+      readyAfterFrames={readyAfterFrames}
+    />
+  );
 }
 
 function ParticleSystem({
   active,
   settings,
+  onReady,
+  readyAfterFrames,
 }: {
   active: boolean;
   settings: ParticleSettings;
+  onReady?: () => void;
+  readyAfterFrames: number;
 }) {
   const points = useRef<THREE.Points>(null);
   const simMaterial = useRef<THREE.ShaderMaterial>(null);
@@ -183,6 +208,8 @@ function ParticleSystem({
 
   const pingPongRef = useRef(true);
   const isFirstFrameRef = useRef(true);
+  const renderedFramesRef = useRef(0);
+  const hasReportedReadyRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -221,6 +248,15 @@ function ParticleSystem({
       gl.setRenderTarget(previousRenderTarget);
 
       pingPongRef.current = !pingPongRef.current;
+
+      renderedFramesRef.current += 1;
+      if (
+        !hasReportedReadyRef.current &&
+        renderedFramesRef.current >= readyAfterFrames
+      ) {
+        hasReportedReadyRef.current = true;
+        onReady?.();
+      }
     }
   });
 

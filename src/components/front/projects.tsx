@@ -88,17 +88,17 @@ const projects: Project[] = [
         status: "Delivered",
         image_gallery: [
             {
-                src: "/images/For-You-Feed.png",
+                src: "/images/nexusix-for-you-feed.avif",
                 alt: "Nexusix For You Feed",
                 title: "For You Feed",
             },
             {
-                src: "/images/Profile.png",
+                src: "/images/nexusix-profile-view.avif",
                 alt: "Nexusix Profile View",
                 title: "Profile View",
             },
             {
-                src: "/images/Share.png",
+                src: "/images/nexusix-share-interface.avif",
                 alt: "Nexusix Share Interface",
                 title: "Share Interface",
             },
@@ -137,7 +137,7 @@ const projects: Project[] = [
         status: "Research",
         image_gallery: [
             {
-                src: "/images/report-page-1.png",
+                src: "/images/sfm-mvs-research-report.jpeg",
                 alt: "SFM-MVS Research Report",
                 title: "Research Report",
             },
@@ -162,7 +162,7 @@ function ProjectGallery({ project }: { project: Project }) {
                                             alt={image.alt}
                                             fill
                                             className="object-cover"
-                                            priority={index === 0}
+                                            sizes="(min-width: 768px) 350px, 300px"
                                         />
                                     </div>
                                 </CarouselItem>
@@ -184,7 +184,7 @@ function ProjectGallery({ project }: { project: Project }) {
                     alt={project.image_gallery[0].alt}
                     fill
                     className="object-cover"
-                    priority
+                    sizes="(min-width: 1024px) 600px, 100vw"
                 />
             </div>
         </div>

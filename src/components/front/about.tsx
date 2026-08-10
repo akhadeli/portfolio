@@ -89,12 +89,12 @@ export default function About() {
                         >
                             <div className="relative w-full h-96 bg-zinc-800 overflow-hidden shadow-2xl">
                                 <Image
-                                    src="/images/profile.jpeg"
-                                    alt="Abdullah Khadeli - AI/UI Engineer Team Lead"
-                                    width={320}
-                                    height={320}
+                                    src="/images/abdullah-khadeli-profile.jpeg"
+                                    alt="Abdullah Khadeli - Product Engineer"
+                                    width={1200}
+                                    height={1600}
+                                    sizes="(min-width: 1024px) 50vw, 100vw"
                                     className="w-full h-full object-cover object-center"
-                                    priority
                                 />
                             </div>
                         </motion.div>

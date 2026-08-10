@@ -3,10 +3,9 @@
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { MeshTransmissionMaterial } from "@react-three/drei";
+import { useMemo } from "react";
 
 const GLASS_Z = 1.5;
-const BACKGROUND = new THREE.Color("#000000");
-
 // Fullscreen pane of "fluid" glass between the camera and the particle
 // ring, so the whole animation is viewed through it. The liquid feel
 // comes from the material's animated noise distortion rather than the
@@ -25,6 +24,7 @@ export function FluidGlass({
     temporalDistortion = 0.2,
     samples = 4,
     resolution = 768,
+    backgroundColor = "#000000",
 }: {
     ior?: number;
     thickness?: number;
@@ -34,6 +34,7 @@ export function FluidGlass({
     temporalDistortion?: number;
     samples?: number;
     resolution?: number;
+    backgroundColor?: string;
 }) {
     const viewport = useThree((state) => state.viewport);
     const camera = useThree((state) => state.camera);
@@ -44,6 +45,10 @@ export function FluidGlass({
         0,
         GLASS_Z,
     ]);
+    const background = useMemo(
+        () => new THREE.Color(backgroundColor),
+        [backgroundColor],
+    );
 
     return (
         <mesh position={[0, 0, GLASS_Z]}>
@@ -60,7 +65,7 @@ export function FluidGlass({
                 temporalDistortion={temporalDistortion}
                 samples={samples}
                 resolution={resolution}
-                background={BACKGROUND}
+                background={background}
             />
         </mesh>
     );

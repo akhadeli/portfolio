@@ -6,7 +6,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
     const heroRef = useRef(null);
@@ -27,12 +27,6 @@ export default function Hero() {
             },
         );
     }, []);
-
-    const handleEnterClick = () => {
-        document
-            .getElementById("about")
-            ?.scrollIntoView({ behavior: "smooth" });
-    };
 
     return (
         <>
@@ -76,12 +70,14 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 1.1 }}
                 >
                     <Button
-                        onClick={handleEnterClick}
+                        asChild
                         variant="outline"
                         className="group relative border border-border bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary/20 transition-all duration-500 px-8 py-3 text-sm tracking-[0.2em] uppercase font-light pointer-events-auto"
                     >
-                        <span className="relative z-10">See more</span>
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        <a href="#about" aria-label="Skip to about section">
+                            <span className="relative z-10">See more</span>
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </a>
                     </Button>
                 </motion.div>
             </motion.div>
