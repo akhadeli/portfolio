@@ -27,6 +27,7 @@ export default function ParticleCloud({
     const [isVisible, setIsVisible] = useState(true);
     const [gpuSettings, setGpuSettings] = useState<ParticleSettings | null>(null);
     const [particlesReady, setParticlesReady] = useState(false);
+    const [envelopeCompensation, setEnvelopeCompensation] = useState(1);
     const [minimumWarmupElapsed, setMinimumWarmupElapsed] = useState(
         warmupMs === 0,
     );
@@ -77,6 +78,38 @@ export default function ParticleCloud({
     }, [isDesktop]);
 
     useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const updateCompensation = () => {
+            const renderedSize = Math.min(
+                container.clientWidth,
+                container.clientHeight,
+            );
+            const referenceSize = Number.parseFloat(
+                window
+                    .getComputedStyle(container)
+                    .getPropertyValue("--particle-reference-size"),
+            );
+            const nextCompensation =
+                renderedSize > 0 && Number.isFinite(referenceSize)
+                    ? referenceSize / renderedSize
+                    : 1;
+
+            setEnvelopeCompensation((current) =>
+                Math.abs(current - nextCompensation) > 0.001
+                    ? nextCompensation
+                    : current,
+            );
+        };
+
+        updateCompensation();
+        const observer = new ResizeObserver(updateCompensation);
+        observer.observe(container);
+        return () => observer.disconnect();
+    }, [isDesktop]);
+
+    useEffect(() => {
         if (!isDesktop || warmupMs === 0) {
             setMinimumWarmupElapsed(true);
             return;
@@ -93,6 +126,13 @@ export default function ParticleCloud({
     if (!isDesktop) return null;
 
     const isReady = particlesReady && minimumWarmupElapsed;
+    // The larger refractive pane makes the dense ring read slightly smaller
+    // even when its nominal diameter is preserved. Restore that visual weight
+    // without increasing the canvas backing resolution.
+    const sceneScale = scale * envelopeCompensation * 1.1;
+    const renderDpr = gpuSettings
+        ? gpuSettings.maxDpr * envelopeCompensation
+        : 1;
 
     // With reduced motion enabled, let the scene settle behind its warm-up
     // curtain, then retain that frame instead of continually animating it.
@@ -112,19 +152,20 @@ export default function ParticleCloud({
             }}
             data-gpu-tier={gpuSettings?.tier}
             data-particle-count={gpuSettings ? gpuSettings.size ** 2 : undefined}
+            data-envelope-compensation={envelopeCompensation.toFixed(3)}
         >
             {gpuSettings ? (
                 <Canvas
                     aria-hidden="true"
                     camera={{ position: [0, 0, 3] }}
-                    dpr={[1, gpuSettings.maxDpr]}
+                    dpr={renderDpr}
                     frameloop={sceneActive ? "always" : "never"}
                     gl={{ alpha: true, antialias: gpuSettings.antialias }}
                 >
                     {refractive ? (
                         <color attach="background" args={[glassBackground]} />
                     ) : null}
-                    <group scale={scale}>
+                    <group scale={sceneScale}>
                         <Particles
                             active={sceneActive}
                             settings={gpuSettings}
