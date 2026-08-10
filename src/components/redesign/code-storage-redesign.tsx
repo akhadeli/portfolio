@@ -12,10 +12,10 @@ const experiences = [
         company: "STARISE",
         location: "DOHA, QATAR",
         summary:
-            "Shipping customer-facing product work across TanStack Start, Next.js, Django, and Azure-backed systems.",
+            "I ship customer-facing features across TanStack Start, Next.js, Django, and Azure, and help set technical direction along the way.",
         outcomes: [
-            "Own features from product direction through production delivery",
-            "Drive technical decisions across frontend and service boundaries",
+            "Own features from the first product conversation to production",
+            "Make the architecture calls across frontend and service boundaries",
         ],
     },
     {
@@ -24,11 +24,11 @@ const experiences = [
         company: "TENN.AI",
         location: "REMOTE",
         summary:
-            "Led product engineering for AI workflows with an emphasis on clarity, responsiveness, and dependable delivery.",
+            "Led product engineering for an AI workflow product. Most of the job was making a complex tool feel fast and behave predictably.",
         outcomes: [
-            "Improved perceived interface speed by 4x",
+            "Made the interface feel 4x faster to users",
             "Set technical direction across product cycles",
-            "Presented product outcomes at Web Summit Doha",
+            "Presented the product at Web Summit Doha",
         ],
     },
     {
@@ -37,10 +37,10 @@ const experiences = [
         company: "GRADEKICK",
         location: "EDMONTON, CANADA",
         summary:
-            "Built an education product from zero to production, including AI orchestration and cloud platform foundations.",
+            "Took an education product from nothing to production: the app itself, the AI orchestration behind it, and the cloud infrastructure under it.",
         outcomes: [
             "Designed the core application and model-orchestration architecture",
-            "Established Azure Kubernetes deployment and release paths",
+            "Set up Azure Kubernetes deployment and release paths",
         ],
     },
     {
@@ -49,10 +49,10 @@ const experiences = [
         company: "DIBSY",
         location: "DOHA, QATAR",
         summary:
-            "Built analytics and processing improvements for high-volume financial workflows.",
+            "Worked on analytics and data processing for high-volume financial workflows.",
         outcomes: [
-            "Reduced a reporting workflow from 72 hours to under two minutes",
-            "Improved a 15,000-record daily pipeline by 12%",
+            "Cut a reporting workflow from 72 hours to under two minutes",
+            "Sped up a 15,000-record daily pipeline by 12%",
         ],
     },
 ] as const;
@@ -187,6 +187,85 @@ function RefractiveTypeFilter({ strength }: { strength: number }) {
                         <feMergeNode in="liquid-source" />
                     </feMerge>
                 </filter>
+                <filter
+                    id="liquid-image"
+                    x="-8%"
+                    y="-8%"
+                    width="116%"
+                    height="116%"
+                    colorInterpolationFilters="sRGB"
+                >
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.008 0.018"
+                        numOctaves="2"
+                        seed="13"
+                        result="image-noise"
+                    />
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="image-noise"
+                        scale="10"
+                        xChannelSelector="R"
+                        yChannelSelector="B"
+                        result="image-source"
+                    />
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="image-noise"
+                        scale="19"
+                        xChannelSelector="G"
+                        yChannelSelector="R"
+                        result="image-cyan-shape"
+                    />
+                    <feOffset
+                        in="image-cyan-shape"
+                        dx="-4"
+                        result="image-cyan-offset"
+                    />
+                    <feColorMatrix
+                        in="image-cyan-offset"
+                        type="matrix"
+                        values="0 0 0 0 0.18
+                                0 0.9 0 0 0.12
+                                0 0 1 0 0.18
+                                0 0 0 0.27 0"
+                        result="image-cyan"
+                    />
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="image-noise"
+                        scale="19"
+                        xChannelSelector="B"
+                        yChannelSelector="G"
+                        result="image-red-shape"
+                    />
+                    <feOffset
+                        in="image-red-shape"
+                        dx="4"
+                        result="image-red-offset"
+                    />
+                    <feColorMatrix
+                        in="image-red-offset"
+                        type="matrix"
+                        values="1 0 0 0 0.18
+                                0 0 0 0 0.04
+                                0 0 0 0 0.08
+                                0 0 0 0.25 0"
+                        result="image-red"
+                    />
+                    <feBlend
+                        in="image-cyan"
+                        in2="image-red"
+                        mode="screen"
+                        result="image-chroma"
+                    />
+                    <feBlend
+                        in="image-source"
+                        in2="image-chroma"
+                        mode="screen"
+                    />
+                </filter>
             </defs>
         </svg>
     );
@@ -198,8 +277,8 @@ function PersonalWorkSection() {
             <header className={styles.personalSectionIntro}>
                 <h2>SELECTED WORK</h2>
                 <p>
-                    A small set of builds where product thinking, architecture,
-                    and measurable outcomes had to work as one system.
+                    A few projects I keep coming back to. Each one shipped, and
+                    each one moved a number that mattered.
                 </p>
             </header>
             <div className={styles.gridSpacer} aria-hidden="true" />
@@ -207,9 +286,9 @@ function PersonalWorkSection() {
             <article className={styles.personalProject}>
                 <h3>NEXUSIX / MOBILE PRODUCT / 2024</h3>
                 <p>
-                    Led end-to-end development of a commissioned social application
-                    that visualizes user connections through an interactive bubble
-                    interface.
+                    A commissioned social app that maps your connections as an
+                    interactive bubble field. I built it end to end, from the
+                    first sketch to the delivered product.
                 </p>
                 <MarkdownList
                     items={[
@@ -233,9 +312,9 @@ function PersonalWorkSection() {
             <article className={styles.personalProject}>
                 <h3>SFM–MVS / VISION RESEARCH / 2025</h3>
                 <p>
-                    Developed a custom BRISK–SIFT feature extraction stack and
-                    improved a photogrammetry pipeline through CUDA acceleration and
-                    advanced outlier removal.
+                    Research into making 3D reconstruction from photos faster and
+                    cleaner: a custom BRISK–SIFT feature extractor, CUDA
+                    acceleration, and better outlier removal.
                 </p>
                 <MarkdownList
                     items={[
@@ -273,8 +352,8 @@ function PersonalExperienceSection() {
             <header className={styles.personalSectionIntro}>
                 <h2>EXPERIENCE</h2>
                 <p>
-                    Roles are useful context. The more important record is what
-                    became faster, clearer, or possible because of the work.
+                    Titles only tell you so much. What matters is what got
+                    faster, clearer, or possible at each place.
                 </p>
             </header>
             <div className={styles.gridSpacer} aria-hidden="true" />
@@ -394,27 +473,27 @@ export default function CodeStorageRedesign({
                             </p>
                         )}
 
-                        <h1>PRODUCT ENGINEERING FOR AMBITIOUS SYSTEMS</h1>
+                        <h1>ROUGH IDEAS INTO WORKING SOFTWARE</h1>
 
                         <p>
-                            I turn unclear product ideas into useful software. My
-                            work sits between product direction, engineering
-                            architecture, and the discipline required to get both
-                            into production.
+                            I&apos;m Abdullah, a product engineer. Most of my work
+                            lives in the gap between what a product should be and
+                            what it takes to ship it: direction, architecture, and
+                            the follow-through to get both into production.
                         </p>
 
                         <p>
-                            I build AI products, developer tooling, and reliable
-                            web platforms. The goal is not novelty for its own sake;
-                            it is a system that users understand and teams can keep
-                            improving.
+                            Lately that means AI products, developer tools, and the
+                            web platforms behind them. I care less about clever tech
+                            than about software that holds up: users understand it,
+                            and the team can keep building on it.
                         </p>
 
                         <p>
-                            Whether a product needs its first technical shape or an
-                            existing platform needs clearer boundaries, I work from
-                            constraints, ship meaningful increments, and stay close
-                            to the outcome.
+                            Some products need their first working version. Others
+                            need someone to untangle what&apos;s already there.
+                            Either way, I start from the real constraints and ship
+                            in small steps you can see.
                         </p>
 
                         <ShaderCodeWindow />
@@ -448,17 +527,16 @@ export default function CodeStorageRedesign({
                     <section className={styles.narrative}>
                         <h2>SELECTED WORK</h2>
                         <p>
-                            A small set of builds where product thinking,
-                            architecture, and measurable outcomes had to work as one
-                            system.
+                            A few projects I keep coming back to. Each one shipped,
+                            and each one moved a number that mattered.
                         </p>
 
                         <article className={styles.project}>
                             <h3>NEXUSIX / MOBILE PRODUCT / 2024</h3>
                             <p>
-                                Led end-to-end development of a commissioned social
-                                application that visualizes user connections through
-                                an interactive bubble interface.
+                                A commissioned social app that maps your connections
+                                as an interactive bubble field. I built it end to
+                                end, from the first sketch to the delivered product.
                             </p>
                             <MobileArtifact
                                 src="/images/nexusix-for-you-feed.avif"
@@ -494,9 +572,10 @@ export default function CodeStorageRedesign({
                         <article className={styles.project}>
                             <h3>SFM–MVS / VISION RESEARCH / 2025</h3>
                             <p>
-                                Developed a custom BRISK–SIFT feature extraction
-                                stack and improved a photogrammetry pipeline through
-                                CUDA acceleration and advanced outlier removal.
+                                Research into making 3D reconstruction from photos
+                                faster and cleaner: a custom BRISK–SIFT feature
+                                extractor, CUDA acceleration, and better outlier
+                                removal.
                             </p>
                             <MobileArtifact
                                 src="/images/sfm-mvs-research-report.jpeg"
@@ -561,9 +640,8 @@ export default function CodeStorageRedesign({
                     <section className={styles.narrative}>
                         <h2>EXPERIENCE</h2>
                         <p>
-                            Roles are useful context. The more important record is
-                            what became faster, clearer, or possible because of the
-                            work.
+                            Titles only tell you so much. What matters is what got
+                            faster, clearer, or possible at each place.
                         </p>
 
                         {experiences.map((experience) => (
@@ -605,15 +683,15 @@ export default function CodeStorageRedesign({
                     <section className={styles.narrative}>
                         <h2>CAPABILITIES</h2>
                         <p>
-                            Breadth matters when it serves delivery. I organize the
-                            stack around the problems it helps solve.
+                            The stack changes with the problem. These are the areas
+                            I keep coming back to.
                         </p>
                         <MarkdownList
                             items={[
-                                "Product engineering — direction, architecture, delivery",
-                                "AI systems — orchestration, retrieval, model workflows",
-                                "Platforms — Next.js, Python, PostgreSQL, cloud infrastructure",
-                                "Visual computing — OpenCV, CUDA, Three.js, WebGL",
+                                "Product engineering: direction, architecture, delivery",
+                                "AI systems: orchestration, retrieval, model workflows",
+                                "Platforms: Next.js, Python, PostgreSQL, cloud infrastructure",
+                                "Visual computing: OpenCV, CUDA, Three.js, WebGL",
                             ]}
                         />
 
@@ -639,9 +717,9 @@ export default function CodeStorageRedesign({
 
                         <h2 id="contact">CONTACT</h2>
                         <p>
-                            If you have a difficult product to shape or a system
-                            that needs clearer technical direction, send me the
-                            constraints.
+                            If you&apos;re shaping a hard product, or you have a
+                            system that&apos;s outgrown its design, I&apos;d like to
+                            hear about it. Send me the constraints.
                         </p>
                         <p className={styles.contactLinks}>
                             {isPersonal ? null : "[ "}<a href="mailto:khadeli@threeark.com">EMAIL</a>{isPersonal ? " ↗" : " ]"}

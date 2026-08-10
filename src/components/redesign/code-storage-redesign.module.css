@@ -1181,6 +1181,12 @@
     border-radius: 0;
 }
 
+.personal .profileArtifact img {
+    transform: scale(1.025);
+    filter: grayscale(0.88) contrast(1.04) saturate(0.75)
+        url("#liquid-image");
+}
+
 .personal .profileTarget {
     text-shadow: none;
 }
