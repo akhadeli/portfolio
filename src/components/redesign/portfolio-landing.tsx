@@ -747,7 +747,7 @@ export default function PortfolioLanding({
                         </div>
                         <div className={`${styles.artifactFrame} ${styles.profileArtifact}`}>
                             <Image
-                                src="/images/abdullah-khadeli-profile.jpeg"
+                                src="/images/abdullah-khadeli-profile-2026.jpg"
                                 alt="Abdullah Khadeli"
                                 fill
                                 sizes="500px"
